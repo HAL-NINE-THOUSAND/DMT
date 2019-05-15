@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 namespace DMT
 {
+    
     public class BuildSettings
     {
 

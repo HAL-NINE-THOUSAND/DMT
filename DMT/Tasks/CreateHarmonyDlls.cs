@@ -10,7 +10,7 @@ using Mono.Cecil.Cil;
 
 namespace DMT.Tasks
 {
-    [RunOrder(RunSection.FinalPatch, RunOrder.LastBuild)]
+    [RunOrder(RunSection.FinalPatch, RunOrder.LateBuild)]
     public class CreateHarmonyDlls : BaseTask
     {
         public override bool Patch(PatchData data)

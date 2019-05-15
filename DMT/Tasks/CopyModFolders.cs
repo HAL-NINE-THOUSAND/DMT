@@ -8,7 +8,7 @@ using Mono.Cecil.Cil;
 
 namespace DMT.Tasks
 {
-    [RunOrder(RunSection.InitialPatch, RunOrder.MidBuild)]
+    [RunOrder(RunSection.FinalPatch, RunOrder.LastBuild)]
     public class CopyModFolders : BaseTask
     {
 
