@@ -77,16 +77,7 @@ namespace DMT
 
         private void Next()
         {
-
-            if (BuildArguments.Count == 0)
-            {
-                Form.Invoke(new Action(() => { Form.EnableButtons(); Form.OnLog($"{DateTime.Now.ToString("HH:mm:ss")}: Build completed in {Math.Round((DateTime.Now - Start).TotalSeconds, 2)} seconds", LogType.Event); }));
-                if (Form.chkPlay.Checked)
-                {
-                    Form.Play_Click(null, null);
-                }
-                return;
-            }
+            if (BuildArguments.Count == 0) return;
 
             var next = BuildArguments[0];
             BuildArguments.RemoveAt(0);
@@ -131,7 +122,18 @@ namespace DMT
         void process_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
 
+
             var text = e.Data ?? String.Empty;
+            if (text == "0|Build Complete")
+            {
+                Form.Invoke(new Action(() => { Form.EnableButtons(); Form.OnLog($"{DateTime.Now.ToString("HH:mm:ss")}: Build completed in {Math.Round((DateTime.Now - Start).TotalSeconds, 2)} seconds", LogType.Event); }));
+                if (Form.chkPlay.Checked)
+                {
+                    Form.Play_Click(null, null);
+                }
+                return;
+            }
+
             ParseLog(text);
 
         }

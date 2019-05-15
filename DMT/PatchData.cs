@@ -167,6 +167,13 @@ namespace DMT
                     return -1;
                 }
             }
+
+
+            if (patches.Any(d => ((int?) d.GetType().GetCustomAttributes(true).OfType<MinRun>().FirstOrDefault()?.Section ?? (int) RunSection.InitialPatch) == (int) RunSection.FinalPatch))
+            {
+                Logging.Log("Build Complete");
+            }
+
             //foreach (var t in patches)
             //{
             //    t.PostPatch(data);
