@@ -37,6 +37,8 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuVersion = new System.Windows.Forms.ToolStripMenuItem();
+            this.madeByMachineElvesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.btnModsFolder = new System.Windows.Forms.Button();
             this.panButtons = new System.Windows.Forms.Panel();
@@ -46,7 +48,6 @@
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
-            this.madeByMachineElvesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -109,7 +110,8 @@
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuVersion,
-            this.madeByMachineElvesToolStripMenuItem1});
+            this.madeByMachineElvesToolStripMenuItem1,
+            this.toolStripMenuItem1});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
@@ -118,8 +120,21 @@
             // 
             this.mnuVersion.Name = "mnuVersion";
             this.mnuVersion.Size = new System.Drawing.Size(198, 22);
-            this.mnuVersion.Text = "Made by Machine Elves";
+            this.mnuVersion.Text = "version";
             this.mnuVersion.Click += new System.EventHandler(this.MnuVersion_Click);
+            // 
+            // madeByMachineElvesToolStripMenuItem1
+            // 
+            this.madeByMachineElvesToolStripMenuItem1.Name = "madeByMachineElvesToolStripMenuItem1";
+            this.madeByMachineElvesToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
+            this.madeByMachineElvesToolStripMenuItem1.Text = "Made by Machine Elves";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
+            this.toolStripMenuItem1.Text = "Check for updates";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // rtbOutput
             // 
@@ -218,12 +233,6 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
-            // madeByMachineElvesToolStripMenuItem1
-            // 
-            this.madeByMachineElvesToolStripMenuItem1.Name = "madeByMachineElvesToolStripMenuItem1";
-            this.madeByMachineElvesToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.madeByMachineElvesToolStripMenuItem1.Text = "Made by Machine Elves";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,6 +277,7 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ColumnHeader ColDesc;
         private System.Windows.Forms.ToolStripMenuItem madeByMachineElvesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 

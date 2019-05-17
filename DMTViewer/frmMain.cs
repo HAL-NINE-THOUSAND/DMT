@@ -108,7 +108,7 @@ namespace DMTViewer
             if (Directory.Exists(updateFolder))
                 Directory.Delete(updateFolder, true);
 
-            if (BuildSettings.AutoCheckForUpdates)
+            if (BuildSettings.Instance.AutoCheckForUpdates)
             {
                 var info = Updater.CheckForUpdate();
                 if (info.UpdateAvailable)
@@ -467,6 +467,11 @@ namespace DMTViewer
         private void MnuVersion_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(BuildSettings.GetVersion());
+        }
+
+        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            new Thread(UpdateCheckThread).Start();
         }
     }
 }

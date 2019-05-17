@@ -18,6 +18,7 @@ namespace DMT
         {
             var ret = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName.FolderFormat();
             return ret;
+
         }
 
     public static void MakeFolder(string path)

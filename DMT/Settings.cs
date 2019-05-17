@@ -17,7 +17,7 @@ namespace DMT
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         public static bool IsLocalBuild { get; set; }
-        public static bool AutoCheckForUpdates { get; set; } = true;
+        public bool AutoCheckForUpdates { get; set; } = true;
 
         public static bool AutoBuild { get; set; }
         public static bool IsSilent { get; set; }

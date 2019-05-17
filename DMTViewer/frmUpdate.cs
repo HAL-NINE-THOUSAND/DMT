@@ -30,6 +30,7 @@ namespace DMT
             try
             {
 
+
                 lblMessage.Text = "Downloading...";
                 Application.DoEvents();
                 WebClient client = new WebClient();
@@ -78,12 +79,12 @@ namespace DMT
         private void FrmUpdate_Load(object sender, EventArgs e)
         {
 
-            chkUpdate.Checked = BuildSettings.AutoCheckForUpdates;
+            chkUpdate.Checked = BuildSettings.Instance.AutoCheckForUpdates;
         }
 
         private void ChkUpdate_CheckedChanged(object sender, EventArgs e)
         {
-            BuildSettings.AutoCheckForUpdates = chkUpdate.Checked;
+            BuildSettings.Instance.AutoCheckForUpdates = chkUpdate.Checked;
             BuildSettings.Save();
         }
     }
