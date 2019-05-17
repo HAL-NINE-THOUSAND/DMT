@@ -32,10 +32,11 @@
             this.lstMods = new System.Windows.Forms.ListView();
             this.ColModName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.madeByMachineElvesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.btnModsFolder = new System.Windows.Forms.Button();
             this.panButtons = new System.Windows.Forms.Panel();
@@ -45,7 +46,7 @@
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
-            this.ColDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.madeByMachineElvesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +82,11 @@
             this.ColAuthor.Text = "Author";
             this.ColAuthor.Width = 127;
             // 
+            // ColDesc
+            // 
+            this.ColDesc.Text = "Description";
+            this.ColDesc.Width = 353;
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -102,16 +108,18 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.madeByMachineElvesToolStripMenuItem});
+            this.mnuVersion,
+            this.madeByMachineElvesToolStripMenuItem1});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // madeByMachineElvesToolStripMenuItem
+            // mnuVersion
             // 
-            this.madeByMachineElvesToolStripMenuItem.Name = "madeByMachineElvesToolStripMenuItem";
-            this.madeByMachineElvesToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.madeByMachineElvesToolStripMenuItem.Text = "Made by Machine Elves";
+            this.mnuVersion.Name = "mnuVersion";
+            this.mnuVersion.Size = new System.Drawing.Size(198, 22);
+            this.mnuVersion.Text = "Made by Machine Elves";
+            this.mnuVersion.Click += new System.EventHandler(this.MnuVersion_Click);
             // 
             // rtbOutput
             // 
@@ -210,10 +218,11 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
-            // ColDesc
+            // madeByMachineElvesToolStripMenuItem1
             // 
-            this.ColDesc.Text = "Description";
-            this.ColDesc.Width = 353;
+            this.madeByMachineElvesToolStripMenuItem1.Name = "madeByMachineElvesToolStripMenuItem1";
+            this.madeByMachineElvesToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
+            this.madeByMachineElvesToolStripMenuItem1.Text = "Made by Machine Elves";
             // 
             // frmMain
             // 
@@ -247,7 +256,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader ColModName;
         private System.Windows.Forms.ColumnHeader ColAuthor;
-        private System.Windows.Forms.ToolStripMenuItem madeByMachineElvesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuVersion;
         private System.Windows.Forms.RichTextBox rtbOutput;
         private System.Windows.Forms.Button btnModsFolder;
         private System.Windows.Forms.Panel panButtons;
@@ -258,6 +267,7 @@
         private System.Windows.Forms.Button Play;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ColumnHeader ColDesc;
+        private System.Windows.Forms.ToolStripMenuItem madeByMachineElvesToolStripMenuItem1;
     }
 }
 

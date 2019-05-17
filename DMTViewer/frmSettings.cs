@@ -45,6 +45,7 @@ namespace DMT
             Instance = this;
             txtModFolder.Text = BuildSettings.Instance.ModFolder;
             OldModFolder = txtModFolder.Text;
+            chkUpdates.Checked = BuildSettings.AutoCheckForUpdates;
             var builds = BuildSettings.Instance.GameFolders ?? new List<string>();
             
             foreach (var s in builds)
@@ -99,6 +100,8 @@ namespace DMT
             var settings = BuildSettings.Instance;
 
             settings.ModFolder = txtModFolder.Text;
+
+            BuildSettings.AutoCheckForUpdates = chkUpdates.Checked;
 
             settings.GameFolders = new List<string>();
 

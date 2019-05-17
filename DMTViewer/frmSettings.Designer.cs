@@ -38,6 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lstRecentLocations = new System.Windows.Forms.ListBox();
             this.lblRecentLocations = new System.Windows.Forms.Label();
+            this.chkUpdates = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnSave
@@ -122,11 +123,24 @@
             this.lblRecentLocations.TabIndex = 8;
             this.lblRecentLocations.Text = "Recent Locations";
             // 
+            // chkUpdates
+            // 
+            this.chkUpdates.AutoSize = true;
+            this.chkUpdates.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkUpdates.Location = new System.Drawing.Point(305, 76);
+            this.chkUpdates.Name = "chkUpdates";
+            this.chkUpdates.Size = new System.Drawing.Size(195, 17);
+            this.chkUpdates.TabIndex = 9;
+            this.chkUpdates.Text = "Automatically check for updates      ";
+            this.chkUpdates.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkUpdates.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 498);
+            this.Controls.Add(this.chkUpdates);
             this.Controls.Add(this.lblRecentLocations);
             this.Controls.Add(this.lstRecentLocations);
             this.Controls.Add(this.label2);
@@ -156,5 +170,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lstRecentLocations;
         private System.Windows.Forms.Label lblRecentLocations;
+        private System.Windows.Forms.CheckBox chkUpdates;
     }
 }

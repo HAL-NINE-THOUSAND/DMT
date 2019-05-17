@@ -15,6 +15,13 @@ namespace DMT
 
         public const string AssemblyFilename = "Assembly-CSharp.dll";
 
+        public string UpdateSource { get; set; } = String.Empty;
+        public string UpdateDestination { get; set; } = String.Empty;
+        public bool IsUpdate
+        {
+            get { return !String.IsNullOrEmpty(UpdateSource) && !String.IsNullOrEmpty(UpdateDestination); }
+        }
+
         public string ModFolder { get; set; }
         public string GameFolder { get; set; }
 

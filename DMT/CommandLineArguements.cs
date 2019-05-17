@@ -13,19 +13,45 @@
             return false;
         }
     }
-    public class CommandModsFolder : ICommandLineArgument
-    {
-        public bool Apply(string arg, string next, PatchData data)
-        {
-            if (arg.EqualsIgnoreCase("/ModFolder") || arg.EqualsIgnoreCase("/location"))
-            {
-                data.ModFolder = next;
-                BuildSettings.Instance.ModFolder = next;
-                return true;
-            }
-            return false;
-        }
-    }
+  public class CommandModsFolder : ICommandLineArgument
+  {
+      public bool Apply(string arg, string next, PatchData data)
+      {
+          if (arg.EqualsIgnoreCase("/ModFolder") || arg.EqualsIgnoreCase("/location"))
+          {
+              data.ModFolder = next;
+              BuildSettings.Instance.ModFolder = next;
+              return true;
+          }
+          return false;
+      }
+  }
+
+
+  public class UpdateSourceCommand : ICommandLineArgument
+  {
+      public bool Apply(string arg, string next, PatchData data)
+      {
+          if (arg.EqualsIgnoreCase("/UpdateSource"))
+          {
+              data.UpdateSource = next.Replace("\"", ""); 
+              return true;
+          }
+          return false;
+      }
+  }
+  public class UpdateDestinationCommand : ICommandLineArgument
+  {
+      public bool Apply(string arg, string next, PatchData data)
+      {
+          if (arg.EqualsIgnoreCase("/UpdateDestination"))
+          {
+              data.UpdateDestination = next.Replace("\"", "");
+              return true;
+          }
+          return false;
+      }
+  }
     public class CommandAutoBuild : ICommandLineArgument
     {
         public bool Apply(string arg, string next, PatchData data)

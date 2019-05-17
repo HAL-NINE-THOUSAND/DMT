@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
@@ -11,12 +12,18 @@ namespace DMT
     public class BuildSettings
     {
 
+        public static string GetVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
         public static bool IsLocalBuild { get; set; }
+        public static bool AutoCheckForUpdates { get; set; } = true;
 
         public static bool AutoBuild { get; set; }
         public static bool IsSilent { get; set; }
         public static bool ScriptOnly { get; set; }
-        public static bool DisableLocalisation { get; set; } 
+        public static bool DisableLocalisation { get; set; }
+
 
         public static BuildSettings Instance { get; set; } = new BuildSettings();
 

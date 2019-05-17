@@ -34,7 +34,7 @@ namespace DMTViewer
 
             chkPlay.Checked = BuildSettings.Instance.AutoPlay;
             chkAutoClose.Checked = BuildSettings.Instance.AutoClose;
-
+            mnuVersion.Text = BuildSettings.GetVersion();
             LoadPlugins();
         }
 
@@ -90,6 +90,43 @@ namespace DMTViewer
             {
                 this.BeginInvoke((MethodInvoker)this.ShowSettings); 
             }
+
+            this.Text += " " + BuildSettings.GetVersion();
+
+
+            new Thread(UpdateCheckThread).Start();
+
+        }
+
+        private void UpdateCheckThread()
+        {
+            try
+            {
+
+            var updateFolder = Application.StartupPath + "/Update/";
+
+            if (Directory.Exists(updateFolder))
+                Directory.Delete(updateFolder, true);
+
+            if (BuildSettings.AutoCheckForUpdates)
+            {
+                var info = Updater.CheckForUpdate();
+                if (info.UpdateAvailable)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        frmUpdate frm = new frmUpdate(info);
+                        frm.ShowDialog();
+                    }));
+                }
+            }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while checking for updates: " + e.Message);
+            }
+
+
         }
 
         private void LoadModsUI()
@@ -425,6 +462,11 @@ namespace DMTViewer
         private void Panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void MnuVersion_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(BuildSettings.GetVersion());
         }
     }
 }

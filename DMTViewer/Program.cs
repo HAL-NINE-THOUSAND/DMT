@@ -20,19 +20,29 @@ namespace DMTViewer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-           
+
             //debug localbuild commands
             //    args = new[] {$@"/GameFolder", @"""C:\Games\steamapps\common\7 Days To Die DMT\""", "/InitialPatch" };
-            
-           
+            //@"/updatesource \""C:\!Projects\DMT\DMTViewer\bin\Debug/Update/\""/updatedestination "C:\!Projects\DMT\DMTViewer\bin\Debug""
+
+            //if (args != null && args.Length >0)
+            //    MessageBox.Show(String.Join("\r\n", args));
+
            BuildSettings.Load();
 
             if ( args.Length > 0)
             {
                 var data = PatchData.Create(BuildSettings.Instance);
                 data.ParseArguments(args);
-                BuildSettings.Instance.Init();
 
+
+                if (data.IsUpdate)
+                {
+                    Updater.Update(data.UpdateSource, data.UpdateDestination);
+                    return 0;
+                }
+
+                BuildSettings.Instance.Init();
                 if (BuildSettings.AutoBuild)
                 {
                     new RemoteBuilder().RemoteBuild(new frmMain());
