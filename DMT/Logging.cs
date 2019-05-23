@@ -75,7 +75,26 @@ namespace DMT
         public static void CommandLine(string s)
         {
             Console.WriteLine(s);
-            File.AppendAllText(LogPath, s + "\n");
+
+
+            var attempts = 0;
+
+            while(true)
+            {
+
+                if (attempts++ > 10)
+                    throw new NotImplementedException("Could not write to log file");
+                try
+                {
+                    File.AppendAllText(LogPath, s + "\n");
+                    break;
+                }
+                catch (Exception e)
+                {
+                    System.Threading.Thread.Sleep(100);
+                }
+
+            }
         }
 
         public static void LogInternal(string text, LogType type)
