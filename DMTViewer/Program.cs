@@ -20,6 +20,16 @@ namespace DMTViewer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            //if (args == null || args.Length == 0)
+            //args = new[]
+            //{
+            //    "/Autobuild", "/GameFolder",
+            //    @"C:\Games\steamapps\common\7 Days To Die DMT",
+            //    "/ModFolder", @"C:\7DaysToDie\DMT Mods",
+            //};
+
+
+            if (File.Exists(Application.StartupPath + "/break.txt")) return -10;
 
             //debug localbuild commands
             //    args = new[] {$@"/GameFolder", @"""C:\Games\steamapps\common\7 Days To Die DMT\""", "/InitialPatch" };
@@ -33,6 +43,8 @@ namespace DMTViewer
             if ( args.Length > 0)
             {
                 var data = PatchData.Create(BuildSettings.Instance);
+
+
                 data.ParseArguments(args);
 
 
@@ -43,10 +55,20 @@ namespace DMTViewer
                 }
 
                 BuildSettings.Instance.Init();
-                if (BuildSettings.AutoBuild)
+                try
                 {
-                    new RemoteBuilder().RemoteBuild(new frmMain());
-                    return 0;
+
+                    if (BuildSettings.AutoBuild)
+                    {
+                        Logging.Log("Auto Build");
+                        new RemoteBuilder().RemoteBuild(null, data);
+                        return 0;
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    Logging.CommandLine(e.Message);
                 }
 
                 return data.Patch();

@@ -8,6 +8,8 @@
             {
                 var val = next.Replace("\"", "").FolderFormat();
                 data.GameFolder = val;
+                BuildSettings.Instance.GameFolders.Clear();
+                BuildSettings.Instance.GameFolders.Add(val);
                 return true;
             }
             return false;

@@ -44,14 +44,14 @@ namespace DMT
 
         }
 
-        internal void RemoteBuild(frmMain frm)
+        internal void RemoteBuild(frmMain frm, PatchData data = null)
         {
 
             Start = DateTime.Now;
             Form = frm;
-            Form.DisableButtons();
+            Form?.DisableButtons();
 
-            var data = PatchData.Create(BuildSettings.Instance);
+            data = data ?? PatchData.Create(BuildSettings.Instance);
 
             foreach (var location in BuildSettings.Instance.GameFolders)
             {
@@ -114,7 +114,9 @@ namespace DMT
             SdxProcess.Start();
             SdxProcess.BeginErrorReadLine();
             SdxProcess.BeginOutputReadLine();
-           // SdxProcess.WaitForExit();
+            Logging.CommandLine("process started " + args);
+            if (BuildSettings.AutoBuild)
+                SdxProcess.WaitForExit();
 
             return true;
         }
@@ -126,10 +128,18 @@ namespace DMT
             var text = e.Data ?? String.Empty;
             if (text == "0|Build Complete")
             {
-                Form.Invoke(new Action(() => { Form.EnableButtons(); Form.OnLog($"{DateTime.Now.ToString("HH:mm:ss")}: Build completed in {Math.Round((DateTime.Now - Start).TotalSeconds, 2)} seconds", LogType.Event); }));
-                if (Form.chkPlay.Checked)
+                var msg = $"{DateTime.Now.ToString("HH:mm:ss")}: Build completed in {Math.Round((DateTime.Now - Start).TotalSeconds, 2)} seconds";
+                if (Form != null)
                 {
-                    Form.Play_Click(null, null);
+                    Form.Invoke(new Action(() => { Form.EnableButtons(); Form.OnLog(msg, LogType.Event); }));
+                    if (Form.chkPlay.Checked)
+                    {
+                        Form.Play_Click(null, null);
+                    }
+                }
+                else
+                {
+                    Logging.CommandLine(msg);
                 }
                 return;
             }
@@ -162,7 +172,14 @@ namespace DMT
             int type;
             int.TryParse(typeString, out type);
 
-            Form.Invoke(new Action(() => { Form.OnLog(msg, (LogType)type); }));
+            if (Form != null)
+            {
+                Form?.Invoke(new Action(() => { Form.OnLog(msg, (LogType)type); }));
+            }
+            else
+            {
+                Logging.CommandLine(msg);
+            }
         }
 
         void process_Exited(object sender, EventArgs e)
@@ -171,8 +188,15 @@ namespace DMT
             var pro = sender as Process;
             if (pro != null && pro.ExitCode < 0)
             {
-                Form.Invoke(new Action(() => { Form.OnLog($"process exited with error code " + pro.ExitCode, LogType.Error); }));
-                Form.Invoke(new Action(() => { Form.TryFindError(); Form.EnableButtons(); }));
+                if (Form == null)
+                {
+                    Logging.CommandLine($"process exited with error code " + pro.ExitCode);
+                }
+                else
+                {
+                    Form.Invoke(new Action(() => { Form.OnLog($"process exited with error code " + pro.ExitCode, LogType.Error); }));
+                    Form.Invoke(new Action(() => { Form.TryFindError(); Form.EnableButtons(); }));
+                }
                 return;
             }
             Next();
@@ -181,8 +205,10 @@ namespace DMT
 
         void process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-
-            Form.Invoke(new Action(() => { Form.OnLog(e.Data, LogType.Error); }));
+            if (Form == null)
+                Logging.CommandLine(e.Data);
+            else
+                Form?.Invoke(new Action(() => { Form.OnLog(e.Data, LogType.Error); }));
         }
 
     }
