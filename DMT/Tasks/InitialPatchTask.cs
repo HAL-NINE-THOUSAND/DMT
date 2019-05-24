@@ -12,7 +12,7 @@ namespace DMT.Tasks
 
         public override bool Patch(PatchData data)
         {
-            if (BuildSettings.ScriptOnly) return true;
+          
 
             ModuleDefinition gameModule = data.ReadModuleDefinition(data.BackupDllLocataion);
             ModuleDefinition dmt = data.ReadModuleDefinition(data.ManagedFolder + "DMT.dll");

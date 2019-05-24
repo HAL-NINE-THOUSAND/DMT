@@ -18,6 +18,12 @@ namespace DMT.Tasks
             try
             {
 
+                if (BuildSettings.ScriptOnly)
+                {
+                    Logging.Log("Copying mod folders disabled with ScriptOnly flag"); 
+                    return true;
+                }
+
                 Logging.Log("Copying mod folders");
 
                 var disabledMods = data.InactiveMods;

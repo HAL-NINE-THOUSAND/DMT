@@ -11,7 +11,6 @@ namespace DMT.Tasks
         public override bool Patch(PatchData data)
         {
 
-            if (BuildSettings.ScriptOnly) return true;
 
             ModuleDefinition gameModule = data.ReadModuleDefinition(data.LinkedDllLocation);
             ModuleDefinition modsModule = data.ReadModuleDefinition(data.ModDllLocation);

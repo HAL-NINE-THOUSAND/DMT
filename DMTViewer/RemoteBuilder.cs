@@ -64,9 +64,12 @@ namespace DMT
                     Helper.KillProcessByName(exe);
                 }
 
-                BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}""");
-                BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}""");
-                BuildArguments.Add($@"/FinalPatch /GameFolder ""{data.GameFolder}""");
+                var extraArgs = "";
+                if (BuildSettings.AutoBuild) extraArgs += " /ScriptOnly";
+
+                BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}""" + extraArgs);
+                BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}""" + extraArgs);
+                BuildArguments.Add($@"/FinalPatch /GameFolder ""{data.GameFolder}""" + extraArgs);
 
                 if (BuildSettings.Instance.AutoPlay)
                     BuildArguments.Add($@"startprocess {data.StartPath}");
