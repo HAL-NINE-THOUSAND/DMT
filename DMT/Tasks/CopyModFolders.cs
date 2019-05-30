@@ -18,36 +18,34 @@ namespace DMT.Tasks
             try
             {
 
-                if (BuildSettings.ScriptOnly)
+                if (!BuildSettings.ScriptOnly)
                 {
-                    Logging.Log("Copying mod folders disabled with ScriptOnly flag"); 
-                    return true;
-                }
 
-                Logging.Log("Copying mod folders");
+                    Logging.Log("Copying mod folders");
 
-                var disabledMods = data.InactiveMods;
-                for (int i = 0; i < disabledMods.Count; i++)
-                {
-                    ModInfo mod = disabledMods[i];
-
-                    string nativeModsDir = $"{data.GameFolder}\\Mods";
-                    Helper.MakeFolder(nativeModsDir);
-
-                    string sdxDir = $"{nativeModsDir}/{mod.Name}";
-
-                    if (Directory.Exists(sdxDir))
+                    var disabledMods = data.InactiveMods;
+                    for (int i = 0; i < disabledMods.Count; i++)
                     {
-                        if (i > 0)
+                        ModInfo mod = disabledMods[i];
+
+                        string nativeModsDir = $"{data.GameFolder}\\Mods";
+                        Helper.MakeFolder(nativeModsDir);
+
+                        string sdxDir = $"{nativeModsDir}/{mod.Name}";
+
+                        if (Directory.Exists(sdxDir))
                         {
-                            Logging.NewLine();
+                            if (i > 0)
+                            {
+                                Logging.NewLine();
+                            }
+
+                            Logging.LogInfo($"Removing disabled mod " + sdxDir);
+                            Directory.Delete(sdxDir, true);
                         }
 
-                        Logging.LogInfo($"Removing disabled mod " + sdxDir);
-                        Directory.Delete(sdxDir, true);
+
                     }
-
-
                 }
 
                 IList<ModInfo> enabledMods = data.ActiveMods;
@@ -89,7 +87,10 @@ namespace DMT.Tasks
 </xml>");
                     }
 
-                    var foldersToCopy = new List<string>()
+                    if (BuildSettings.ScriptOnly)
+                        continue;
+
+                        var foldersToCopy = new List<string>()
                     {
                         "ItemIcons",
                         "Config",
