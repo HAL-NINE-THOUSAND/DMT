@@ -93,25 +93,23 @@ namespace DMTViewer
 
             this.Text += " " + BuildSettings.GetVersion();
 
-
-            new Thread(UpdateCheckThread).Start();
+            if (BuildSettings.Instance.AutoCheckForUpdates)
+                new Thread(() => { UpdateCheckThread(true); }).Start();
 
         }
 
-        private void UpdateCheckThread()
+        private void UpdateCheckThread(bool autoCheck)
         {
             try
             {
 
-            var updateFolder = Application.StartupPath + "/Update/";
+                var updateFolder = Application.StartupPath + "/Update/";
 
-            if (Directory.Exists(updateFolder))
-                Directory.Delete(updateFolder, true);
+                if (Directory.Exists(updateFolder))
+                    Directory.Delete(updateFolder, true);
 
-            if (BuildSettings.Instance.AutoCheckForUpdates)
-            {
                 var info = Updater.CheckForUpdate();
-                if (info.UpdateAvailable)
+                if (info.UpdateAvailable || (!autoCheck && info.DownloadUrl == String.Empty))
                 {
                     this.Invoke(new Action(() =>
                     {
@@ -119,7 +117,6 @@ namespace DMTViewer
                         frm.ShowDialog();
                     }));
                 }
-            }
             }
             catch (Exception e)
             {
@@ -471,7 +468,7 @@ namespace DMTViewer
 
         private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            new Thread(UpdateCheckThread).Start();
+            new Thread(() => {UpdateCheckThread(false); }).Start();
         }
     }
 }

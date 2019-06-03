@@ -61,18 +61,15 @@ namespace DMT
             try
             {
 
-                var github = new GitHubClient(new ProductHeaderValue("MyAmazingApp"));
-                var user = github.User.Get("HAL-NINE-THOUSAND").Result;
-                Console.WriteLine(user.Followers + " folks love the half ogre!");
-
+                var github = new GitHubClient(new ProductHeaderValue("DMT-Update-Checker"));
                 var releases = github.Repository.Release.GetAll("HAL-NINE-THOUSAND", "DMT").Result;
                 var latest = releases[0];
                 var version = latest.Assets[0].Name.ToLower().Replace("dmtv", "").Replace(".zip", "");
 
                 var thisVersion = BuildSettings.GetVersion();
                 updateAvailable = version != thisVersion;
-                url = latest.Assets[0].BrowserDownloadUrl;
-                message = "An update is available. " + version;
+                url = updateAvailable ? latest.Assets[0].BrowserDownloadUrl : "";
+                message = updateAvailable ? "An update is available. " + version : "There is no update available"; 
             }
             catch (Exception boo)
             {

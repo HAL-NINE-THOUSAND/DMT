@@ -21,6 +21,7 @@ namespace DMT
             InitializeComponent();
             UpdateInfo = info;
             lblMessage.Text = info.Message;
+            btnDownload.Enabled = info.DownloadUrl != String.Empty;
 
         }
 
