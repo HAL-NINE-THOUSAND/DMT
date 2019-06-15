@@ -33,5 +33,12 @@ namespace DMT
         {
             frmSettings.Instance.ApplyFolderLookup(txtLocation);
         }
+
+        public void OnResize()
+        {
+            var margin = 5;
+            btnModFolder.Left = this.ClientSize.Width - margin - btnModFolder.Width;
+            txtLocation.Width = btnModFolder.Left - txtLocation.Left;
+        }
     }
 }

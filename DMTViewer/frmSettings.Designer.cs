@@ -66,6 +66,7 @@
             this.txtModFolder.Name = "txtModFolder";
             this.txtModFolder.Size = new System.Drawing.Size(371, 20);
             this.txtModFolder.TabIndex = 2;
+            this.txtModFolder.Resize += new System.EventHandler(this.TxtModFolder_Resize);
             // 
             // btnModFolder
             // 
@@ -153,6 +154,7 @@
             this.Name = "frmSettings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
+            this.ResizeEnd += new System.EventHandler(this.FrmSettings_ResizeEnd);
             this.ResumeLayout(false);
             this.PerformLayout();
 

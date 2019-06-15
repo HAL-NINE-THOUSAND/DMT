@@ -136,5 +136,35 @@ namespace DMT
 
             ReorderBuilds(null, null);
         }
+
+        private void TxtModFolder_Resize(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void FrmSettings_ResizeEnd(object sender, EventArgs e)
+        {
+
+            var margin = 50;
+
+            btnModFolder.Left = this.ClientSize.Width - margin - btnModFolder.Width;
+            chkUpdates.Left = this.ClientSize.Width - margin - chkUpdates.Width;
+            panBuilds.Width = this.ClientSize.Width - margin- panBuilds.Left;
+            btnAddBuildLocation.Left = this.ClientSize.Width - margin - btnAddBuildLocation.Width;
+            lstRecentLocations.Width = this.ClientSize.Width - margin - lstRecentLocations.Left;
+            txtModFolder.Width = btnModFolder.Left - txtModFolder.Left - 10;
+            btnSave.Left = (this.ClientSize.Width / 2) - (btnSave.Width / 2);
+
+
+            foreach (BuildFolder c in panBuilds.Controls)
+            {
+                var s = c.Size;
+                s.Width = panBuilds.Width;
+                c.Size = s;
+                c.OnResize();
+            }
+
+        }
     }
 }
