@@ -86,7 +86,7 @@ public class DMTChanges
                 {
 
                     var harmPath = path + "/Harmony/";
-                    var modinfoPath = path + "/modInfo.xml";
+                    var modinfoPath = path + "/ModInfo.xml";
 
                     if (Directory.Exists(harmPath) && File.Exists(modinfoPath))
                     {
