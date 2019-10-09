@@ -34,6 +34,11 @@ namespace DMT
         {
             get { return GameFolder + (IsDedicatedServer ? "startdedicated.bat" : "7DaysToDie.exe"); }
         }
+        
+        public string ExePath
+        {
+            get { return GameFolder + (IsDedicatedServer ? "7DaysToDieServer.exe" : "7DaysToDie.exe"); }
+        }
 
         public string ConfigFolder { get; set; }
         public string ManagedFolder { get; set; }

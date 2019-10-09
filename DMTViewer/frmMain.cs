@@ -470,5 +470,30 @@ namespace DMTViewer
         {
             new Thread(() => {UpdateCheckThread(false); }).Start();
         }
+
+        private void MadeByMachineElvesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnDebug_Click(object sender, EventArgs e)
+        {
+
+            System.Windows.Forms.DialogResult ret = DialogResult.OK;
+            if (dnSpyDebugging.DnSpyInstalled() == false)
+            {
+                var frm = new frmDnspy();
+                ret = frm.ShowDialog();
+            }
+
+            if (ret == DialogResult.OK)
+            {
+               var error = dnSpyDebugging.StartDebugging();
+
+                if (!String.IsNullOrWhiteSpace(error))
+                    MessageBox.Show(this, error);
+            }
+
+        }
     }
 }

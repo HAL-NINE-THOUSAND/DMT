@@ -40,6 +40,7 @@
       <HintPath>..\packages\Lib.Harmony.1.2.0.1\lib\net35\0Harmony.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.9.6.4\lib\net45\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -80,6 +81,13 @@
     <Compile Include="BuildFolder.Designer.cs">
       <DependentUpon>BuildFolder.cs</DependentUpon>
     </Compile>
+    <Compile Include="dnSpyDebugging.cs" />
+    <Compile Include="frmDnspy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDnspy.Designer.cs">
+      <DependentUpon>frmDnspy.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +112,9 @@
     <Compile Include="Updater.cs" />
     <EmbeddedResource Include="BuildFolder.resx">
       <DependentUpon>BuildFolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDnspy.resx">
+      <DependentUpon>frmDnspy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -134,12 +145,32 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="UnityResources\Unity.2018.2.0\boot.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="UnityResources\Unity.2018.2.0\mono.dll.orig">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="UnityResources\Unity.2019.1.0\boot.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="UnityResources\Unity.2019.1.0\mono-2.0-bdwgc.dll.orig">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HAL9000.ico" />
+    <Content Include="UnityResources\Unity.2018.2.0\mono-2.0-bdwgc.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UnityResources\Unity.2018.2.0\mono.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UnityResources\Unity.2019.1.0\mono-2.0-bdwgc.dll" />
+    <Content Include="UnityResources\Unity.2019.1.0\mono.dll" />
     <None Include="Resources\icoHal.ico" />
   </ItemGroup>
   <ItemGroup>

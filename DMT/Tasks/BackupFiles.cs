@@ -25,7 +25,17 @@ namespace DMT.Tasks
             var ins = pro.Body.Instructions;
             var start = ins.First(d => d.OpCode == OpCodes.Stsfld && ((FieldDefinition)d.Operand).Name.Contains("cCompatibilityVersion"));
 
-            start = start.Next.Next;
+            while (true)
+            {
+                var code = start.OpCode.ToString();
+                
+                if (code.Contains(".i4"))
+                    break;
+
+                start=start.Next;
+            }
+
+            start = start.Next;
 
             MajorVersion = start.GetValueAsInt();
             MinorVersion = start.Next.GetValueAsInt();

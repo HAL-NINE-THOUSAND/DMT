@@ -48,6 +48,7 @@
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
+            this.btnDebug = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -61,6 +62,7 @@
             this.ColAuthor,
             this.ColDesc});
             this.lstMods.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lstMods.HideSelection = false;
             this.lstMods.Location = new System.Drawing.Point(0, 104);
             this.lstMods.Name = "lstMods";
             this.lstMods.Size = new System.Drawing.Size(668, 402);
@@ -128,6 +130,7 @@
             this.madeByMachineElvesToolStripMenuItem1.Name = "madeByMachineElvesToolStripMenuItem1";
             this.madeByMachineElvesToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
             this.madeByMachineElvesToolStripMenuItem1.Text = "Made by Machine Elves";
+            this.madeByMachineElvesToolStripMenuItem1.Click += new System.EventHandler(this.MadeByMachineElvesToolStripMenuItem1_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -168,6 +171,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnDebug);
             this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.Play);
             this.panel1.Controls.Add(this.chkPlay);
@@ -233,6 +237,16 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(1124, 12);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(75, 32);
+            this.btnDebug.TabIndex = 12;
+            this.btnDebug.Text = "Debug Exe";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Click += new System.EventHandler(this.BtnDebug_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,6 +292,7 @@
         private System.Windows.Forms.ColumnHeader ColDesc;
         private System.Windows.Forms.ToolStripMenuItem madeByMachineElvesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.Button btnDebug;
     }
 }
 

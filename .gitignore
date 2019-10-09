@@ -260,3 +260,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/DMTViewer/UnityResources/Unity.2018.2.0
+/DMTViewer/UnityResources/Unity.2019.1.0

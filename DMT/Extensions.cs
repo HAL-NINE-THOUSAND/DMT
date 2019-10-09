@@ -69,8 +69,11 @@ namespace DMT
                 return 1;
             if (i.OpCode == OpCodes.Ldc_I4_2)
                 return 2;
-
+            
             if (i.OpCode == OpCodes.Ldc_I4_S)
+                return int.Parse(i.Operand.ToString());
+
+            if (i.OpCode == OpCodes.Ldc_I4)
                 return int.Parse(i.Operand.ToString());
 
             if (i.OpCode == OpCodes.Ldc_I4_M1)
