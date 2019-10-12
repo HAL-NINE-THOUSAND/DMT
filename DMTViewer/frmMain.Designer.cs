@@ -43,12 +43,14 @@
             this.btnModsFolder = new System.Windows.Forms.Button();
             this.panButtons = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnDebug = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.Play = new System.Windows.Forms.Button();
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
-            this.btnDebug = new System.Windows.Forms.Button();
+            this.experimentalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableDebuggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -113,7 +115,8 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuVersion,
             this.madeByMachineElvesToolStripMenuItem1,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.experimentalToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
@@ -185,6 +188,17 @@
             this.panel1.TabIndex = 9;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
             // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(1124, 12);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(75, 32);
+            this.btnDebug.TabIndex = 12;
+            this.btnDebug.Text = "Debug Exe";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Visible = false;
+            this.btnDebug.Click += new System.EventHandler(this.BtnDebug_Click);
+            // 
             // btnRefresh
             // 
             this.btnRefresh.Location = new System.Drawing.Point(454, 10);
@@ -237,15 +251,20 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
-            // btnDebug
+            // experimentalToolStripMenuItem
             // 
-            this.btnDebug.Location = new System.Drawing.Point(1124, 12);
-            this.btnDebug.Name = "btnDebug";
-            this.btnDebug.Size = new System.Drawing.Size(75, 32);
-            this.btnDebug.TabIndex = 12;
-            this.btnDebug.Text = "Debug Exe";
-            this.btnDebug.UseVisualStyleBackColor = true;
-            this.btnDebug.Click += new System.EventHandler(this.BtnDebug_Click);
+            this.experimentalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableDebuggerToolStripMenuItem});
+            this.experimentalToolStripMenuItem.Name = "experimentalToolStripMenuItem";
+            this.experimentalToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.experimentalToolStripMenuItem.Text = "Experimental";
+            // 
+            // enableDebuggerToolStripMenuItem
+            // 
+            this.enableDebuggerToolStripMenuItem.Name = "enableDebuggerToolStripMenuItem";
+            this.enableDebuggerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enableDebuggerToolStripMenuItem.Text = "Enable Debugger";
+            this.enableDebuggerToolStripMenuItem.Click += new System.EventHandler(this.EnableDebuggerToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -293,6 +312,8 @@
         private System.Windows.Forms.ToolStripMenuItem madeByMachineElvesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Button btnDebug;
+        private System.Windows.Forms.ToolStripMenuItem experimentalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableDebuggerToolStripMenuItem;
     }
 }
 

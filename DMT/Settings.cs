@@ -11,7 +11,10 @@ namespace DMT
     
     public class BuildSettings
     {
-
+ 
+        public static int MajorVersion { get; set; }
+        public static int MinorVersion { get; set; }
+        public static int BuildNumber { get; set; }
         public static string GetVersion()
         {
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();

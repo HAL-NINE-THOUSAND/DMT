@@ -53,10 +53,16 @@ namespace DMT
                     {
                         foreach (var entry in arch.Entries)
                         {
+                            
                             if (entry.Name != String.Empty)
                             {
-                                var name = entry.FullName.Contains("/") ? entry.FullName.Split('/')[1] : entry.FullName;
-                                entry.ExtractToFile(Path.Combine(zipLocation, name));
+
+                                var fullPath = Path.Combine(zipLocation, entry.FullName);
+                                var dir = Path.GetDirectoryName(fullPath);
+
+                                Directory.CreateDirectory(dir);
+                                var name = entry.FullName;
+                                entry.ExtractToFile(fullPath);
                             }
                         }
                     }
@@ -72,7 +78,7 @@ namespace DMT
             }
             catch (Exception exception)
             {
-                MessageBox.Show("Something went wrong while updating: " + exception.Message);
+                MessageBox.Show("Something went wrong while updating: " + exception.Message + "\nYou can download the release here: " + UpdateInfo.DownloadUrl);
             }
 
         }

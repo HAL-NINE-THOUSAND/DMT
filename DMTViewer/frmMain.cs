@@ -282,6 +282,11 @@ namespace DMTViewer
 
         }
 
+        public void ShowError(string msg)
+        {
+            OnLog(msg, LogType.Error);
+        }
+
         internal void OnLog(string str, LogType logType)
         {
 
@@ -436,6 +441,7 @@ namespace DMTViewer
         private void RefreshMods()
         {
 
+            Logging.LogAction = ShowError;
             BuildSettings.Instance.Init();
             LoadModsUI();
         }
@@ -494,6 +500,11 @@ namespace DMTViewer
                     MessageBox.Show(this, error);
             }
 
+        }
+
+        private void EnableDebuggerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnDebug.Visible = true;
         }
     }
 }

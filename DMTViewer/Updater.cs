@@ -35,10 +35,17 @@ namespace DMT
 
                 destinationFolder = destinationFolder.FolderFormat();
 
+                Directory.CreateDirectory(destinationFolder);
+                
                 foreach (var f in Directory.GetFiles(sourceFolder))
                 {
                     var copyTo = destinationFolder + Path.GetFileName(f);
                     File.Copy(f, copyTo, true);
+                }
+                foreach (var f in Directory.GetDirectories(sourceFolder))
+                {
+
+                    Update(sourceFolder.FolderFormat() + new DirectoryInfo(f).Name, f);
                 }
 
                 Process.Start(destinationFolder + "DMTViewer.exe");
@@ -50,6 +57,9 @@ namespace DMT
             }
 
         }
+
+
+
 
         public static UpdateCheckResult CheckForUpdate()
         {
@@ -68,6 +78,7 @@ namespace DMT
 
                 var thisVersion = BuildSettings.GetVersion();
                 updateAvailable = version != thisVersion;
+                var s = "";
                 url = updateAvailable ? latest.Assets[0].BrowserDownloadUrl : "";
                 message = updateAvailable ? "An update is available. " + version : "There is no update available"; 
             }

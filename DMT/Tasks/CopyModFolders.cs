@@ -98,6 +98,7 @@ namespace DMT.Tasks
                         "Harmony",
                         "Texture",
                         "Textures",
+                        "UIAtlases",
                     };
 
                     foreach (var s in foldersToCopy)

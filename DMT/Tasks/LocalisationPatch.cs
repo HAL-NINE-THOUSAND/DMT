@@ -12,6 +12,11 @@ namespace DMT.Tasks
         {
 
             if (BuildSettings.DisableLocalisation) return true;
+            if (BuildSettings.MajorVersion >= 18)
+            {
+                Log("Localisation no longer handled in DMT after A17");
+                return true;
+            }
 
             string sourcePath =$"{data.BackupFolder}Config/Localization.txt";
             string destPath = $"{data.GameFolder}/Data/Config/Localization.txt"; 

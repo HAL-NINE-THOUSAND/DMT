@@ -41,36 +41,36 @@ namespace DMT
 
             var configDoc = new XmlDocument();
             configDoc.Load(modXmlPath);
-            ret.IsValid = ret.FromXml(configDoc);
+            ret.IsValid = ret.FromXml(modXmlPath, configDoc);
             return ret;
         }
 
-        public bool FromXml(XmlDocument doc)
+        public bool FromXml(string path, XmlDocument doc)
         {
-            XmlElement ele = doc.DocumentElement["info"];
+            XmlElement ele = doc.DocumentElement.GetElement("info");
             if (ele == null)
             {
-                Logging.LogError("Mod config is missing 'info' node");
+                Logging.LogError(path + " Mod config is missing 'info' node");
                 return false;
             }
 
             for (int i = 0; i < requiredFields.Length; i++)
             {
                 string fieldName = requiredFields[i];
-                if (ele[fieldName] == null)
+                if (ele.GetElement(fieldName) == null)
                 {
-                    Logging.LogError("Mod info is missing '" + fieldName + "' node");
+                    Logging.LogError(path + " Mod info is missing '" + fieldName + "' node");
                     return false;
                 }
             }
 
 
-            Name = ele["name"].GetValue();
-            ModVersion = ele["mod_version"].GetValue();
+            Name = ele.GetElementValue("name");
+            ModVersion = ele.GetElementValue("mod_version");
 
-            Author = ele["author"].GetValue();
-            Description = ele["description"].GetValue();
-            HelpFilePath = Path.Combine(this.Location, ele["help"].GetValue());
+            Author = ele.GetElementValue("author");
+            Description = ele.GetElementValue("description");
+            HelpFilePath = Path.Combine(this.Location, ele.GetElementValue("help"));
 
             var dependencies = doc.DocumentElement["dependencies"] ?? doc.DocumentElement["Dependencies"];
             if (dependencies != null)

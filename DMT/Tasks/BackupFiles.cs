@@ -10,9 +10,7 @@ namespace DMT.Tasks
     public class BackupFiles : BaseTask
     {
 
-        public int MajorVersion { get; set; }
-        public int MinorVersion { get; set; }
-        public int BuildNumber { get; set; }
+   
 
         private ModuleDefinition Module { get; set; }
 
@@ -37,9 +35,9 @@ namespace DMT.Tasks
 
             start = start.Next;
 
-            MajorVersion = start.GetValueAsInt();
-            MinorVersion = start.Next.GetValueAsInt();
-            BuildNumber = start.Next.Next.GetValueAsInt();
+            BuildSettings.MajorVersion = start.GetValueAsInt();
+            BuildSettings.MinorVersion = start.Next.GetValueAsInt();
+            BuildSettings.BuildNumber = start.Next.Next.GetValueAsInt();
 
         }
 
@@ -70,7 +68,7 @@ namespace DMT.Tasks
             Module = ass.MainModule;
             GetVersionInfo();
 
-            data.BackupFolder = data.BackupFolder + (data.IsDedicatedServer ? "Dedi/" : "SP/") + MajorVersion + "." + MinorVersion + "b" + BuildNumber + "/";
+            data.BackupFolder = data.BackupFolder + (data.IsDedicatedServer ? "Dedi/" : "SP/") + BuildSettings.MajorVersion + "." + BuildSettings.MinorVersion + "b" + BuildSettings.BuildNumber + "/";
             data.BackupFolder.MakeFolder();
             data.BackupDllLocataion = data.BackupFolder + PatchData.AssemblyFilename;
 

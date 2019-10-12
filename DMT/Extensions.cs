@@ -41,6 +41,33 @@ namespace DMT
         {
             return ele?.InnerText?.Trim() ?? String.Empty;
         }
+        public static string GetElementValue(this XmlElement ele, string name)
+        {
+            foreach (var e in ele.ChildNodes)
+            {
+                var element = e as XmlElement;
+                if (element != null)
+                {
+                    if (element.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                        return element.GetValue();
+                }
+            }
+            return String.Empty;
+        }
+        public static XmlElement GetElement(this XmlElement ele, string name)
+        {
+            foreach(var e in ele.ChildNodes)
+            {
+                var element = e as XmlElement;
+                if (element != null)
+                {
+                    if (element.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                        return element;
+                }
+            }
+
+            return null;
+        }
 
         public static bool EqualsIgnoreCase(this string s, string find)
         {
