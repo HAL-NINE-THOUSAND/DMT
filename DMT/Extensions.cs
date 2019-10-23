@@ -127,6 +127,26 @@ namespace DMT
             return asm.GetInheritors(typeof(T)).Select(d => Activator.CreateInstance(d) as T).ToArray();
         }
 
+        public static Instruction GetNextIntInstruction(this Instruction ins)
+        {
+
+            if (ins == null) return null;
+            var start= ins.Next;
+            while (true)
+            {
+                if (start == null) break;
+                var code = start.OpCode.ToString();
+                
+                if (code.Contains(".i4"))
+                {
+                    return start;
+                }
+
+                start=start.Next;
+            }
+            return null;
+        }
+
         public static Type[] GetInheritors(this Assembly asm, Type interfaceType)
         {
             var types = asm.GetTypes();

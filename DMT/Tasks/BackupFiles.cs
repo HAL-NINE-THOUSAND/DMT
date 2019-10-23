@@ -21,23 +21,15 @@ namespace DMT.Tasks
             var ctor = consts.Methods.Single(d => d.Name == ".cctor");
             var pro = ctor.Body.GetILProcessor();
             var ins = pro.Body.Instructions;
-            var start = ins.First(d => d.OpCode == OpCodes.Stsfld && ((FieldDefinition)d.Operand).Name.Contains("cCompatibilityVersion"));
+            var instruction = ins.First(d => d.OpCode == OpCodes.Stsfld && ((FieldDefinition)d.Operand).Name.Contains("cCompatibilityVersion"));
 
-            while (true)
-            {
-                var code = start.OpCode.ToString();
-                
-                if (code.Contains(".i4"))
-                    break;
 
-                start=start.Next;
-            }
-
-            start = start.Next;
-
-            BuildSettings.MajorVersion = start.GetValueAsInt();
-            BuildSettings.MinorVersion = start.Next.GetValueAsInt();
-            BuildSettings.BuildNumber = start.Next.Next.GetValueAsInt();
+            instruction = instruction.GetNextIntInstruction().GetNextIntInstruction();
+            BuildSettings.MajorVersion = instruction.GetValueAsInt();
+            instruction = instruction.GetNextIntInstruction();
+            BuildSettings.MinorVersion = instruction.GetValueAsInt();
+            instruction = instruction.GetNextIntInstruction();
+            BuildSettings.BuildNumber = instruction.GetValueAsInt();
 
         }
 
