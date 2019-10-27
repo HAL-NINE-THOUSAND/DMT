@@ -81,14 +81,20 @@ namespace DMTViewer
 
         }
 
+        private void frmMain_Activated(object sender, EventArgs e)
+        {
+
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
+
+
             this.Icon = Resources.HAL9000;
             LoadModsUI();
 
             if (!Directory.Exists(BuildSettings.Instance.ModFolder))
             {
-                this.BeginInvoke((MethodInvoker)this.ShowSettings); 
+                this.BeginInvoke((MethodInvoker)this.ShowSettings);
             }
 
             this.Text += " " + BuildSettings.GetVersion();
@@ -348,12 +354,6 @@ namespace DMTViewer
         private void lstMods_MouseDown(object sender, MouseEventArgs e)
         {
             return;
-            var control = this.lstMods.GetItemAt(e.X, e.Y);
-            if (control != null)
-                control.Selected = true;
-
-            if (this.lstMods.SelectedItems.Count == 0) return;
-            this.lstMods.DoDragDrop(this.lstMods.SelectedItems[0], DragDropEffects.Move);
         }
 
         private void lstMods_DragOver(object sender, DragEventArgs e)
@@ -367,29 +367,29 @@ namespace DMTViewer
             //disabling for now until run order is decided
             return;
 
-            Point point = lstMods.PointToClient(new Point(e.X, e.Y));
-            var control = this.lstMods.GetItemAt(point.X, point.Y);
+            //Point point = lstMods.PointToClient(new Point(e.X, e.Y));
+            //var control = this.lstMods.GetItemAt(point.X, point.Y);
 
-            if (control == null) return;
+            //if (control == null) return;
 
-            List<ListViewItem> selected = new List<ListViewItem>();
-            foreach (ListViewItem s in lstMods.SelectedItems)
-                selected.Insert(0, s);
+            //List<ListViewItem> selected = new List<ListViewItem>();
+            //foreach (ListViewItem s in lstMods.SelectedItems)
+            //    selected.Insert(0, s);
 
-            foreach (ListViewItem s in selected)
-                lstMods.Items.Remove(s);
+            //foreach (ListViewItem s in selected)
+            //    lstMods.Items.Remove(s);
 
-            for (int x = 0; x < lstMods.Items.Count; x++)
-            {
-                var i = lstMods.Items[x];
-                if (i.Text == control.Text)
-                {
-                    foreach (ListViewItem s in selected)
-                        lstMods.Items.Insert(x, s);
+            //for (int x = 0; x < lstMods.Items.Count; x++)
+            //{
+            //    var i = lstMods.Items[x];
+            //    if (i.Text == control.Text)
+            //    {
+            //        foreach (ListViewItem s in selected)
+            //            lstMods.Items.Insert(x, s);
 
-                    break;
-                }
-            }
+            //        break;
+            //    }
+            //}
 
         }
 
@@ -421,7 +421,7 @@ namespace DMTViewer
 
             Process.Start("explorer.exe", BuildSettings.Instance.ModFolder.Replace('/', '\\'));
         }
-        
+
         public void Play_Click(object sender, EventArgs e)
         {
 
@@ -474,7 +474,7 @@ namespace DMTViewer
 
         private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            new Thread(() => {UpdateCheckThread(false); }).Start();
+            new Thread(() => { UpdateCheckThread(false); }).Start();
         }
 
         private void MadeByMachineElvesToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -494,7 +494,7 @@ namespace DMTViewer
 
             if (ret == DialogResult.OK)
             {
-               var error = dnSpyDebugging.StartDebugging();
+                var error = dnSpyDebugging.StartDebugging();
 
                 if (!String.IsNullOrWhiteSpace(error))
                     MessageBox.Show(this, error);
@@ -506,5 +506,6 @@ namespace DMTViewer
         {
             btnDebug.Visible = true;
         }
+
     }
 }

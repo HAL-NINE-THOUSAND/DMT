@@ -22,7 +22,7 @@ namespace DMT
     {
         public const string LogFile = "BuildLog.txt";
 
-        public static string LogPath;
+        //public static string LogPath;
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool AttachConsole(int dwProcessId);
 
@@ -33,7 +33,7 @@ namespace DMT
         // this must be called early in the program
         static Logging()
         {
-            LogPath = Application.StartupPath + "/" + LogFile;
+            //LogPath = Application.StartupPath + "/" + LogFile;
 
             // this needs to happen before attachconsole.
             // If the output is not redirected we still get a valid stream but it doesn't appear to write anywhere
@@ -44,7 +44,7 @@ namespace DMT
 
             AttachConsole(ATTACH_PARENT_PROCESS);
         }
-        
+
         public static Action<string> LogAction;
 
         public static void NewLine()
@@ -70,38 +70,41 @@ namespace DMT
 
         public static void StartFile()
         {
-            File.WriteAllText(LogPath, "");
+            //File.WriteAllText(LogPath, "");
         }
         public static void CommandLine(string s)
         {
+
+
+            //Console.WriteLine("Console: '{0}'", s);
             Console.WriteLine(s);
 
 
-            var attempts = 0;
+            //var attempts = 0;
 
-            while(true)
-            {
+            //while(true)
+            //{
 
-                if (attempts++ > 10)
-                    throw new NotImplementedException("Could not write to log file");
-                try
-                {
-                    File.AppendAllText(LogPath, s + "\n");
-                    break;
-                }
-                catch (Exception e)
-                {
-                    System.Threading.Thread.Sleep(100);
-                }
+            //    if (attempts++ > 10)
+            //        throw new NotImplementedException("Could not write to log file");
+            //    //try
+            //    //{
+            //        File.AppendAllText(LogPath, s + "\n");
+            //        break;
+            //    //}
+            //    //catch (Exception e)
+            //    //{
+            //    //    System.Threading.Thread.Sleep(100);
+            //    //}
 
-            }
+            //}
         }
 
         public static void LogInternal(string text, LogType type)
         {
             text = (int)type + "|" + text;
+            //Console.WriteLine("msg '{0}'", text);
             Console.WriteLine(text);
-
             LogAction?.Invoke(text);
 
         }

@@ -59,7 +59,6 @@ namespace DMT.Tasks
 
                     Logging.Log($"Copy from {mod.Location}");
 
-
                     string nativeModsDir = $"{data.GameFolder}/Mods";
                     Helper.MakeFolder(nativeModsDir);
 
@@ -68,9 +67,22 @@ namespace DMT.Tasks
 
                     string modInfoSource = $"{mod.Location}/ModInfo.xml";
                     string modInfoDestination = $"{gameModDir}/ModInfo.xml";
+                    var p1 = Path.GetFullPath(modInfoSource);
+                    var p2 = Path.GetFullPath(modInfoDestination);
+
+                    if (p1.Equals(p2))
+                    {
+                        Logging.Log("Skipping copy as destination matches source: " + modInfoSource);
+                        continue;
+                    }
+
+                    //Logging.Log("Copying ");
+                    //Logging.Log("p1: " + p1);
+                    //Logging.Log("p2: " + p2);
 
                     if (File.Exists(modInfoSource))
                     {
+                        Logging.Log("Copying " + modInfoSource);
                         File.Copy(modInfoSource, modInfoDestination, true);
                     }
                     else
@@ -90,7 +102,7 @@ namespace DMT.Tasks
                     if (BuildSettings.ScriptOnly)
                         continue;
 
-                        var foldersToCopy = new List<string>()
+                    var foldersToCopy = new List<string>()
                     {
                         "ItemIcons",
                         "Config",

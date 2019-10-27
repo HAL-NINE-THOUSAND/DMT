@@ -15,7 +15,13 @@ namespace DMT
 
         public bool IsValid;
         public string Name;
-        public string Location;
+
+        public string FolderName;
+        public string Location
+        {
+            get{ return (BuildSettings.Instance.ModFolder.FolderFormat() + FolderName).FolderFormat(); }
+        }
+
         public bool Enabled;
         public string Author;
         public string Description;
@@ -31,7 +37,10 @@ namespace DMT
             if (!File.Exists(modXmlPath)) return null;
 
             var ret = new ModInfo();
-            ret.Location = directory;
+
+
+            //ret.Location = directory;
+            ret.FolderName = new DirectoryInfo(directory).Name;
             ret.Enabled = true;
             ret.Name = "Unknown";
             ret.Author = "Unknown";

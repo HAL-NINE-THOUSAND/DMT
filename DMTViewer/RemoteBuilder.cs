@@ -14,7 +14,7 @@ namespace DMT
         private frmMain Form;
 
         private List<string> BuildArguments = new List<string>();
-        Process SdxProcess = new Process();
+        //Process SdxProcess = new Process();
 
         private DateTime Start;
 
@@ -67,9 +67,9 @@ namespace DMT
                 var extraArgs = "";
                 if (BuildSettings.AutoBuild) extraArgs += " /ScriptOnly";
 
-                BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}""" + extraArgs);
-                BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}""" + extraArgs);
-                BuildArguments.Add($@"/FinalPatch /GameFolder ""{data.GameFolder}""" + extraArgs);
+                BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
+                BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
+                BuildArguments.Add($@"/FinalPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
 
                 if (BuildSettings.Instance.AutoPlay)
                     BuildArguments.Add($@"startprocess {data.StartPath}");
@@ -80,7 +80,13 @@ namespace DMT
 
         private void Next()
         {
-            if (BuildArguments.Count == 0) return;
+
+            if (BuildArguments.Count == 0)
+            {
+                //Logging.Log("no more commands");
+                return;
+            }
+
 
             var next = BuildArguments[0];
             BuildArguments.RemoveAt(0);
@@ -102,7 +108,7 @@ namespace DMT
 
 
 
-            SdxProcess= new Process();
+           var SdxProcess= new Process();
             SdxProcess.EnableRaisingEvents = true;
             SdxProcess.OutputDataReceived += process_OutputDataReceived;
             SdxProcess.ErrorDataReceived += process_ErrorDataReceived;
@@ -119,7 +125,10 @@ namespace DMT
             SdxProcess.BeginOutputReadLine();
             Logging.CommandLine("process started " + args);
             if (BuildSettings.AutoBuild)
-                SdxProcess.WaitForExit();
+            {
+                var ret = SdxProcess.WaitForExit(9999999);
+            }
+
 
             return true;
         }
@@ -144,6 +153,7 @@ namespace DMT
                 {
                     Logging.CommandLine(msg);
                 }
+                BuildSettings.AutoBuildComplete = true;
                 return;
             }
 
@@ -153,6 +163,8 @@ namespace DMT
 
         public void ParseLog(string text)
         {
+
+            //Logging.Log("parsing " + text);
 
             int i = 0;
             var typeString = "";
@@ -189,11 +201,12 @@ namespace DMT
         {
 
             var pro = sender as Process;
-            if (pro != null && pro.ExitCode < 0)
+            if (pro != null && pro.ExitCode != 0)
             {
+                Logging.CommandLine($"process exited with error code " + pro.ExitCode);
+                BuildSettings.AutoBuildComplete = true;
                 if (Form == null)
                 {
-                    Logging.CommandLine($"process exited with error code " + pro.ExitCode);
                 }
                 else
                 {
@@ -208,10 +221,12 @@ namespace DMT
 
         void process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (Form == null)
-                Logging.CommandLine(e.Data);
-            else
+            if (e.Data != null)
+            {
+                BuildSettings.AutoBuildComplete = true;
+                Logging.CommandLine("Error:" + e.Data);
                 Form?.Invoke(new Action(() => { Form.OnLog(e.Data, LogType.Error); }));
+            }
         }
 
     }

@@ -36,7 +36,7 @@ namespace DMT
                 destinationFolder = destinationFolder.FolderFormat();
 
                 Directory.CreateDirectory(destinationFolder);
-                
+
                 foreach (var f in Directory.GetFiles(sourceFolder))
                 {
                     var copyTo = destinationFolder + Path.GetFileName(f);
@@ -78,9 +78,9 @@ namespace DMT
 
                 var thisVersion = BuildSettings.GetVersion();
                 updateAvailable = version != thisVersion;
-                var s = "";
+                //var s = "";
                 url = updateAvailable ? latest.Assets[0].BrowserDownloadUrl : "";
-                message = updateAvailable ? "An update is available. " + version : "There is no update available"; 
+                message = updateAvailable ? "An update is available. " + version : "There is no update available";
             }
             catch (Exception boo)
             {
@@ -97,17 +97,17 @@ namespace DMT
 
         }
 
-  
+
         public static string GetInfo()
         {
 
             try
             {
 
-                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(ReleaseUrl);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ReleaseUrl);
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded"; // or whatever - application/json, etc, etc
-                HttpWebResponse response = (HttpWebResponse) request.GetResponse();
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 using (StreamReader sr = new StreamReader(response.GetResponseStream()))
                 {
                     return sr.ReadToEnd();

@@ -21,7 +21,7 @@ namespace DMT
 
         }
 
-    public static void MakeFolder(string path)
+        public static void MakeFolder(string path)
         {
 
             if (path == null) return;
@@ -69,7 +69,7 @@ namespace DMT
             File.Copy(source, dest.FolderFormat() + filename, true);
         }
 
-        public static void CopyFolder(string from, string to, bool recursive)
+        public static void CopyFolder(string from, string to, bool recursive, string ignoreFilename = "")
         {
 
             to = to.FolderFormat();
@@ -78,15 +78,18 @@ namespace DMT
             foreach (var f in Directory.GetFiles(from))
             {
                 var name = Path.GetFileName(f);
+
+                if (name.EqualsIgnoreCase(ignoreFilename))
+                    continue;
                 File.Copy(f, to + name, true);
             }
 
             if (recursive)
-            foreach (var dir in Directory.GetDirectories(from))
-            {
-                var name = new DirectoryInfo(dir).Name;
-                CopyFolder(dir, to + name, recursive);
-            }
+                foreach (var dir in Directory.GetDirectories(from))
+                {
+                    var name = new DirectoryInfo(dir).Name;
+                    CopyFolder(dir, to + name, recursive);
+                }
 
         }
 

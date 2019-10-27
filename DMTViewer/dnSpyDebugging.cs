@@ -31,7 +31,8 @@ namespace DMT
 
             try
             {
-                
+
+                Logging.Log("Starting debugging...");
                 var data = PatchData.Create(BuildSettings.Instance);
 
                 var isDedicatedServer = data.IsDedicatedServer;
@@ -101,7 +102,7 @@ namespace DMT
 
                 File.WriteAllBytes(DnSpyZipLocation, zipBytes);
 
-                Directory.CreateDirectory(DnSpyLocation);                               
+                Directory.CreateDirectory(DnSpyLocation);
                 updateAction?.Invoke("Extracting dnSpy...");
                 Application.DoEvents();
                 ZipFile.ExtractToDirectory(DnSpyZipLocation, DnSpyLocation);
@@ -110,7 +111,7 @@ namespace DMT
             }
             catch (Exception e)
             {
-                   updateAction?.Invoke("Something went wrong: " + e.Message);
+                updateAction?.Invoke("Something went wrong: " + e.Message);
             }
 
         }

@@ -130,6 +130,8 @@ namespace DMT
         public void ParseArguments(string[] args)
         {
 
+            Logging.Log("Parsing arguments");
+
             var cmdLineArgs = AppDomain.CurrentDomain.GetAssemblies().SelectMany(d => d.GetInterfaceImplementers<ICommandLineArgument>()).ToList();
 
             for (int x = 0; x < args.Length; x++)
@@ -154,7 +156,32 @@ namespace DMT
 
             var patchTaskType = typeof(IPatchTask);
 
-            var asses = AppDomain.CurrentDomain.GetAssemblies();
+            var asses = AppDomain.CurrentDomain.GetAssemblies().ToList();
+
+            if (BuildSettings.IsLocalBuild && asses.Any(d => d.FullName.Contains("Mods")))
+            {
+                var acs = BackupFolder + "Assembly-CSharp.dll";
+                //File.Copy(acs, "ACSback.dll", true);
+                
+                var unityFiles = Directory.GetFiles(BackupFolder, "*.dll");
+
+                foreach(var f in unityFiles)
+                {
+
+                    if (f.Contains("System."))
+                        continue;
+                    if (f.Contains(".UI."))
+                        continue;
+                    var info = new FileInfo(f);
+                    var name = Path.GetFileNameWithoutExtension(info.Name);
+                    if (asses.Any(d => d.FullName.Contains(name)))
+                        continue;
+                    asses.Add(System.Reflection.Assembly.LoadFrom(f));
+                }
+                asses.Add(System.Reflection.Assembly.LoadFrom(acs));
+
+            }
+
             var patches = asses
                 .SelectMany(s => s.GetTypes())
                 .Where(d => patchTaskType.IsAssignableFrom(d) && !d.IsInterface && !d.IsAbstract
@@ -176,6 +203,7 @@ namespace DMT
                 if (t?.Patch(this) == false)
                 {
                     Logging.LogError("Build failed");
+                    BuildSettings.AutoBuildComplete = true;
                     return -1;
                 }
             }

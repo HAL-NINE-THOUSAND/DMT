@@ -39,6 +39,8 @@
             this.mnuVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.madeByMachineElvesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.experimentalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableDebuggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.btnModsFolder = new System.Windows.Forms.Button();
             this.panButtons = new System.Windows.Forms.Panel();
@@ -49,8 +51,6 @@
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
-            this.experimentalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enableDebuggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -141,6 +141,21 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
             this.toolStripMenuItem1.Text = "Check for updates";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
+            // 
+            // experimentalToolStripMenuItem
+            // 
+            this.experimentalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableDebuggerToolStripMenuItem});
+            this.experimentalToolStripMenuItem.Name = "experimentalToolStripMenuItem";
+            this.experimentalToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.experimentalToolStripMenuItem.Text = "Experimental";
+            // 
+            // enableDebuggerToolStripMenuItem
+            // 
+            this.enableDebuggerToolStripMenuItem.Name = "enableDebuggerToolStripMenuItem";
+            this.enableDebuggerToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.enableDebuggerToolStripMenuItem.Text = "Enable Debugger";
+            this.enableDebuggerToolStripMenuItem.Click += new System.EventHandler(this.EnableDebuggerToolStripMenuItem_Click);
             // 
             // rtbOutput
             // 
@@ -251,21 +266,6 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
-            // experimentalToolStripMenuItem
-            // 
-            this.experimentalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableDebuggerToolStripMenuItem});
-            this.experimentalToolStripMenuItem.Name = "experimentalToolStripMenuItem";
-            this.experimentalToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.experimentalToolStripMenuItem.Text = "Experimental";
-            // 
-            // enableDebuggerToolStripMenuItem
-            // 
-            this.enableDebuggerToolStripMenuItem.Name = "enableDebuggerToolStripMenuItem";
-            this.enableDebuggerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.enableDebuggerToolStripMenuItem.Text = "Enable Debugger";
-            this.enableDebuggerToolStripMenuItem.Click += new System.EventHandler(this.EnableDebuggerToolStripMenuItem_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -279,6 +279,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.Text = "DMT";
+            this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.menuStrip1.ResumeLayout(false);

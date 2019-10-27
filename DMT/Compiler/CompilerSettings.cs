@@ -93,7 +93,11 @@ namespace DMT.Compiler
             if (data.RunSection == RunSection.InitialPatch)
                 compilerSettings.AddReference(data.BackupDllLocataion);
             else if (data.RunSection == RunSection.LinkedPatch)
+            {
                 compilerSettings.AddReference(data.InitialDllLocation);
+                //compilerSettings.AddReference(data.ManagedFolder + "Assembly-CSharp.dll");
+
+            }
             else compilerSettings.AddReference(data.LinkedDllLocation);
 
             //for (int i = 0; i < dllPaths.Length; i++)

@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 
 namespace DMT
 {
-    
+
     public class BuildSettings
     {
- 
+
         public static int MajorVersion { get; set; }
         public static int MinorVersion { get; set; }
         public static int BuildNumber { get; set; }
@@ -23,6 +23,7 @@ namespace DMT
         public bool AutoCheckForUpdates { get; set; } = true;
 
         public static bool AutoBuild { get; set; }
+        public static bool AutoBuildComplete { get; set; }
         public static bool IsSilent { get; set; }
         public static bool ScriptOnly { get; set; }
         public static bool DisableLocalisation { get; set; }
@@ -33,7 +34,7 @@ namespace DMT
         public string BackupFolder { get; set; } = String.Empty;
 
         public List<string> GameFolders { get; set; }
-        
+
         public string ModFolder { get; set; } = String.Empty;
 
         public List<string> EnabledMods { get; set; }
@@ -58,7 +59,9 @@ namespace DMT
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(@"Failed loading settings file: " + path);
+                    var err = @"Failed loading settings file: " + path + " - " + e.Message;
+                    Logging.Log(err);
+                    MessageBox.Show(err);
                 }
             }
 
@@ -71,12 +74,12 @@ namespace DMT
             Instance.EnabledMods = Instance.Mods.Where(d => d.Enabled).Select(d => d.Name).ToList();
             var path = Application.StartupPath + "/Settings.json";
             File.WriteAllText(path, JsonConvert.SerializeObject(Instance));
-            
+
         }
 
         public void Init()
         {
-            
+
             var backup = Application.StartupPath + "/Backups/";
             Instance.BackupFolder = backup;
 
@@ -89,13 +92,13 @@ namespace DMT
                     var mod = ModInfo.Create(d);
 
                     if (mod == null) continue;
-                    
+
                     mod.Enabled = EnabledMods == null || EnabledMods.Contains(mod.Name);
                     Mods.Add(mod);
                 }
 
             }
-            
+
         }
 
     }

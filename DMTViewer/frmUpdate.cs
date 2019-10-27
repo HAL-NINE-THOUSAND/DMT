@@ -53,7 +53,7 @@ namespace DMT
                     {
                         foreach (var entry in arch.Entries)
                         {
-                            
+
                             if (entry.Name != String.Empty)
                             {
 

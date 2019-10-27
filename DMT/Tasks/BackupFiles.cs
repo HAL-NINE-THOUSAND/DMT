@@ -64,6 +64,10 @@ namespace DMT.Tasks
             data.BackupFolder.MakeFolder();
             data.BackupDllLocataion = data.BackupFolder + PatchData.AssemblyFilename;
 
+
+            if (BuildSettings.IsLocalBuild)
+                Helper.CopyFolder(data.ManagedFolder, data.BackupFolder, true, "Assembly-CSharp.dll");
+
             if (File.Exists(data.BackupDllLocataion))
             {
                 LogInfo("Backup dll found: " + data.BackupDllLocataion);
@@ -81,6 +85,10 @@ namespace DMT.Tasks
 
 
             File.Copy(data.GameDllLocation, data.BackupDllLocataion, true);
+
+            if (BuildSettings.IsLocalBuild)
+                Helper.CopyFolder(data.ManagedFolder, data.BackupFolder, true);
+
             Helper.CopyFolder(data.ConfigFolder, data.BackupFolder + "Config", true);
             LogInfo("Copied backup dll to: " + data.BackupDllLocataion);
             return true;

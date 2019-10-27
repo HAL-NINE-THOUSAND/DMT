@@ -22,7 +22,7 @@ public class DMTChanges
             Assembly assembly = Assembly.LoadFrom(dllPath);
             assemblies.Add(assembly);
         }
-        
+
         var asses = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
         Log.Out("Assemblies: " + asses.Length);
         foreach (AssemblyName an in asses)
@@ -55,7 +55,7 @@ public class DMTChanges
             Log.Out("Removing DMT assembly");
             assemblies.Remove(dmt);
         }
-        
+
     }
 
     public static void DmtInit()
