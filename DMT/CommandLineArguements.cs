@@ -91,6 +91,20 @@
             return false;
         }
     }
+    public class EnableAllMods : ICommandLineArgument
+    {
+        public bool Apply(string arg, string next, PatchData data)
+        {
+            if (arg.EqualsIgnoreCase("/EnableAllMods"))
+            {
+                BuildSettings.EnableAllMods = true;
+                foreach (var m in BuildSettings.Instance.Mods)
+                    m.Enabled = true;
+                return true;
+            }
+            return false;
+        }
+    }
     public class CommandIsSilent : ICommandLineArgument
     {
         public bool Apply(string arg, string next, PatchData data)

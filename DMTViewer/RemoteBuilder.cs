@@ -66,6 +66,7 @@ namespace DMT
 
                 var extraArgs = "";
                 if (BuildSettings.AutoBuild) extraArgs += " /ScriptOnly";
+                if (BuildSettings.EnableAllMods) extraArgs += " /EnableAllMods";
 
                 BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
                 BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);

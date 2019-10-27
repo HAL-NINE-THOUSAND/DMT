@@ -26,6 +26,7 @@ namespace DMT
         public static bool AutoBuildComplete { get; set; }
         public static bool IsSilent { get; set; }
         public static bool ScriptOnly { get; set; }
+        public static bool EnableAllMods { get; set; }
         public static bool DisableLocalisation { get; set; }
 
 
@@ -33,11 +34,11 @@ namespace DMT
 
         public string BackupFolder { get; set; } = String.Empty;
 
-        public List<string> GameFolders { get; set; }
+        public List<string> GameFolders { get; set; } = new List<string>();
 
         public string ModFolder { get; set; } = String.Empty;
 
-        public List<string> EnabledMods { get; set; }
+        public List<string> EnabledMods { get; set; } = new List<string>();
 
         public List<ModInfo> Mods { get; set; } = new List<ModInfo>();
 
@@ -63,9 +64,10 @@ namespace DMT
                     Logging.Log(err);
                     MessageBox.Show(err);
                 }
-            }
 
+            }
             Instance.Init();
+
         }
 
         public static void Save()
@@ -93,7 +95,7 @@ namespace DMT
 
                     if (mod == null) continue;
 
-                    mod.Enabled = EnabledMods == null || EnabledMods.Contains(mod.Name);
+                    mod.Enabled = BuildSettings.EnableAllMods || EnabledMods == null || EnabledMods.Contains(mod.Name);
                     Mods.Add(mod);
                 }
 

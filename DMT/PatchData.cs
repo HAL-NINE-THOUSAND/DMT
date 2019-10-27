@@ -141,11 +141,13 @@ namespace DMT
                 var next = args.GetNext(x);
 
                 foreach (var c in cmdLineArgs)
+                {
                     if (c.Apply(a, next, this))
                     {
                         cmdLineArgs.Remove(c);
                         break;
                     }
+                }
             }
 
             Init();
