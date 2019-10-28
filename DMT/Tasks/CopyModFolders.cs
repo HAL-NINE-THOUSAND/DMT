@@ -111,6 +111,8 @@ namespace DMT.Tasks
                         "Texture",
                         "Textures",
                         "UIAtlases",
+                        "Worlds",
+                        "Prefabs",
                     };
 
                     foreach (var s in foldersToCopy)
