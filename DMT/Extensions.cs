@@ -78,9 +78,15 @@ namespace DMT
         public static string FolderFormat(this string s)
         {
 
-            if (s == null ) return String.Empty;
+            if (s == null) return String.Empty;
 
-            if (!(s.EndsWith("\\") || s.EndsWith("/")))
+            if (s.EndsWith("\\"))
+            {
+                s = s.Substring(0, s.Length - 1);
+                s += "/";
+            }
+
+            if (!s.EndsWith("/"))
                 s += "/";
 
             return s;
