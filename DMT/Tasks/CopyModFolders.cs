@@ -69,19 +69,15 @@ namespace DMT.Tasks
                     string modInfoDestination = $"{gameModDir}/ModInfo.xml";
                     var p1 = Path.GetFullPath(modInfoSource);
                     var p2 = Path.GetFullPath(modInfoDestination);
+                    var exists = File.Exists(p1);
 
-                    if (p1.Equals(p2))
+                    if (exists)
                     {
-                        Logging.Log("Skipping copy as destination matches source: " + modInfoSource);
-                        continue;
-                    }
-
-                    //Logging.Log("Copying ");
-                    //Logging.Log("p1: " + p1);
-                    //Logging.Log("p2: " + p2);
-
-                    if (File.Exists(modInfoSource))
-                    {
+                        if (p1.Equals(p2) && exists)
+                        {
+                            Logging.Log("Skipping copy as destination matches source: " + modInfoSource);
+                            continue;
+                        }
                         Logging.Log("Copying " + modInfoSource);
                         File.Copy(modInfoSource, modInfoDestination, true);
                     }
