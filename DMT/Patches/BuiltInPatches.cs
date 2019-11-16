@@ -14,8 +14,8 @@ namespace DMT.Patches
         internal void Patch(ModuleDefinition game, ModuleDefinition dmt)
         {
             MarkAsPatched(game);
+            HookHarmony(game, dmt);
             HookConsoleCommands(game, dmt);
-
         }
 
         private void MarkAsPatched(ModuleDefinition game)
@@ -25,6 +25,23 @@ namespace DMT.Patches
             modManager.Fields.Add(fieldDef);
         }
 
+        private void HookHarmony(ModuleDefinition game, ModuleDefinition mod)
+        {
+            Logging.Log("Hooking harmony");
+
+            var gm = game.Types.FirstOrDefault(d => d.Name == "GameManager");
+            var awakeMethod = gm.Methods.First(d => d.Name == "Awake");
+            var helper = mod.Types.First(d => d.Name == "DMTChanges");
+            var hookHarmony = game.Import(helper.Methods.First(d => d.Name == "HookHarmony"));
+
+            var pro = awakeMethod.Body.GetILProcessor();
+            var body = pro.Body.Instructions;
+            var ins = body.First(d => d.OpCode == OpCodes.Newobj);
+
+            pro.InsertBefore(ins, Instruction.Create(OpCodes.Callvirt, hookHarmony));
+
+
+        }
         private void HookConsoleCommands(ModuleDefinition game, ModuleDefinition mod)
         {
             Logging.Log("Hooking console commands");

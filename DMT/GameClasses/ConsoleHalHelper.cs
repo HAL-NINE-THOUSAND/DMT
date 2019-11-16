@@ -64,7 +64,7 @@ public class DMTChanges
         Application.SetStackTraceLogType(UnityEngine.LogType.Log, StackTraceLogType.None);
         Application.SetStackTraceLogType(UnityEngine.LogType.Warning, StackTraceLogType.None);
 
-        HookHarmony();
+        //HookHarmony();
 
     }
 
