@@ -101,6 +101,8 @@ namespace DMT
 
             settings.ModFolder = txtModFolder.Text;
 
+            var modFolderExists = Directory.Exists(settings.ModFolder);
+
             BuildSettings.Instance.AutoCheckForUpdates = chkUpdates.Checked;
 
             settings.GameFolders = new List<string>();
@@ -109,6 +111,20 @@ namespace DMT
             {
                 var val = c.GetValue().FolderFormat();
                 settings.GameFolders.Add(val);
+
+                if (modFolderExists)
+                {
+                    var modFolder = new DirectoryInfo(settings.ModFolder).FullName.FolderFormat();
+                    var buildFolder = new DirectoryInfo(val + "Mods").FullName.FolderFormat();
+
+                    if (modFolder == buildFolder)
+                    {
+                        MessageBox.Show("The DMT mods folder can not be the same as the build targets mod folder. You will get build errors.\nPut the DMT mod folder outside the game directory e.g. C:\\Games\\DMTMods\\.");
+                        return;
+                    }
+
+                }
+
                 if (Directory.Exists(val) && !settings.PreviousLocations.Contains(val))
                 {
                     settings.PreviousLocations.Add(val);
