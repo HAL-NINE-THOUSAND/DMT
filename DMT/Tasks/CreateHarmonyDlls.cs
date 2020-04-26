@@ -48,7 +48,15 @@ namespace DMT.Tasks
                 var dllPaths = mod.FindFiles("Harmony", "*.dll", true);
                 for (int i = 0; i < dllPaths.Count; ++i)
                 {
-                    compilerSettings.AddReference(dllPaths[i]);
+                    var dllPath = dllPaths[i];
+                    if (Path.GetFullPath(compilerSettings.OutputPath) == Path.GetFullPath(dllPath))
+                    {
+                        //Logging.Log("Ignoring harmony DLL: " + Path.GetFileName(dllPath));
+                        continue; //can't reference self as we're building the DLL
+                    }
+
+                    compilerSettings.AddReference(dllPath);
+
                 }
 
                 var compilerResults = data.Compiler.Compile(data, compilerSettings);
