@@ -3,7 +3,7 @@ DMT
 
 An open source replacement for SDX focused on 7 Days to Die.
 
-Latest release can be downloaded here: https://github.com/HAL-NINE-THOUSAND/DMT/releases/download/v1.4/DMTv1.4.7224.16535.zip
+Latest release can be downloaded here: https://github.com/HAL-NINE-THOUSAND/DMT/releases/download/v1.6/DMTv1.6.7444.30177.zip
 
 Quick overview: https://www.youtube.com/watch?v=iZU--05DTLI
 
