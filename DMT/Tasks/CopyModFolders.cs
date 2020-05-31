@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 using DMT.Attributes;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -12,11 +12,36 @@ namespace DMT.Tasks
     public class CopyModFolders : BaseTask
     {
 
+        private bool IsInvalidName(string name)
+        {
+            if (name == null) return true;
+            List<char> invalidPathChars = Path.GetInvalidPathChars().ToList();
+            invalidPathChars.AddRange(Path.GetInvalidFileNameChars());
+            foreach (char c in name)
+            {
+                if (invalidPathChars.Contains(c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public override bool Patch(PatchData data)
         {
 
             try
             {
+
+
+                for (int i = 0; i < data.ActiveMods.Count; i++)
+                {
+                    var mod = data.ActiveMods[i];
+                    if (IsInvalidName(mod.Name))
+                    {
+                        LogError($"Mod '{mod.Name}' has invalid file path characters in it. It will need renaming.");
+                    }
+                }
 
                 if (!BuildSettings.ScriptOnly)
                 {
