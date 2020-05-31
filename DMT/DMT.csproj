@@ -37,9 +37,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lib.Harmony.1.2.0.1\lib\net35\0Harmony.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="0Harmony, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.2.0.1\lib\net35\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="LogLibrary, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -89,6 +88,7 @@
     <Compile Include="Compiler\CompilerSettings.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FullXmlWriter.cs" />
     <Compile Include="GameClasses\ConsoleHalHelper.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Interfaces\ICompiler.cs" />

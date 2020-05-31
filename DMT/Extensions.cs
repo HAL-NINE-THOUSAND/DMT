@@ -41,6 +41,10 @@ namespace DMT
         {
             return ele?.InnerText?.Trim() ?? String.Empty;
         }
+        public static string GetValueAttribute(this XmlElement ele)
+        {
+            return ele?.Attributes["value"]?.Value.Trim() ?? String.Empty;
+        }
         public static string GetElementValue(this XmlElement ele, string name)
         {
             foreach (var e in ele.ChildNodes)
@@ -54,9 +58,37 @@ namespace DMT
             }
             return String.Empty;
         }
+        public static string GetElementValueAttribute(this XmlElement ele, string name)
+        {
+            foreach (var e in ele.ChildNodes)
+            {
+                var element = e as XmlElement;
+                if (element != null)
+                {
+                    if (element.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                        return element.GetValueAttribute();
+                }
+            }
+            return String.Empty;
+        }
         public static XmlElement GetElement(this XmlElement ele, string name)
         {
-            foreach(var e in ele.ChildNodes)
+            foreach (var e in ele.ChildNodes)
+            {
+                var element = e as XmlElement;
+                if (element != null)
+                {
+                    if (element.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                        return element;
+                }
+            }
+
+            return null;
+        }
+
+        public static XmlElement GetElement(this XmlDocument doc, string name)
+        {
+            foreach (var e in doc.DocumentElement.ChildNodes)
             {
                 var element = e as XmlElement;
                 if (element != null)
@@ -70,6 +102,12 @@ namespace DMT
         }
 
         public static bool EqualsIgnoreCase(this string s, string find)
+        {
+            if (s == null || find == null) return false;
+            return s.Equals(find, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public static bool ContainsIgnoreCase(this string s, string find)
         {
             if (s == null || find == null) return false;
             return s.IndexOf(find, StringComparison.OrdinalIgnoreCase) >= 0;

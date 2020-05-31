@@ -11,9 +11,15 @@ namespace DMT
             "name",
             "mod_version",
         };
+        private static string[] requiredFieldsModInfo = new string[]
+        {
+            "name",
+            "version",
+        };
 
 
         public bool IsValid;
+        public bool UpgradeDetected;
         public string Name;
 
         public string FolderName;
@@ -27,18 +33,14 @@ namespace DMT
         public string Description;
         public string ModVersion;
         public string HelpFilePath;
+        public string Website;
         public List<string> Dependencies = new List<string>();
         public List<string> Conflicts = new List<string>();
 
         public static ModInfo Create(string directory)
         {
 
-            string modXmlPath = Path.Combine(directory, "mod.xml");
-            if (!File.Exists(modXmlPath)) return null;
-
             var ret = new ModInfo();
-
-
             //ret.Location = directory;
             ret.FolderName = new DirectoryInfo(directory).Name;
             ret.Enabled = true;
@@ -48,13 +50,55 @@ namespace DMT
             ret.ModVersion = "0.0";
             ret.IsValid = false;
 
-            var configDoc = new XmlDocument();
-            configDoc.Load(modXmlPath);
-            ret.IsValid = ret.FromXml(modXmlPath, configDoc);
+
+            bool hasModFile = false;
+            bool hasModInfoFile = false;
+            string modXmlPath = Path.Combine(directory, "mod.xml");
+            if (hasModFile = File.Exists(modXmlPath))
+            {
+                var configDoc = new XmlDocument();
+                configDoc.Load(modXmlPath);
+                ret.IsValid = ret.FromSdxModFileXml(modXmlPath, configDoc);
+            }
+
+
+            string modInfoPath = Path.Combine(directory, "ModInfo.xml");
+
+            if (hasModFile && !File.Exists(modInfoPath))
+            {
+                File.WriteAllText(modInfoPath, $@"<?xml version=""1.0"" encoding=""UTF-8""?>
+<xml>
+  <ModInfo>
+    <Name value=""{ret.Name}"" />
+    <Description value=""{ret.Description}"" />
+    <Author value=""{ret.Author}"" />
+    <Version value=""{ret.ModVersion}"" />
+    <Website value=""{ret.Website}"" />
+  </ModInfo>
+  <DMT>
+    <dependencies />
+    <conflicts />
+  </DMT>
+</xml>
+");
+            }
+
+            if (hasModInfoFile = File.Exists(modInfoPath))
+            {
+                var configDoc = new XmlDocument();
+                configDoc.Load(modInfoPath);
+                ret.IsValid = ret.FromModInfoXml(modInfoPath, configDoc, hasModFile);
+            }
+            
+            if (!hasModFile && !hasModInfoFile)
+            {
+                return null;
+            }
+
             return ret;
         }
 
-        public bool FromXml(string path, XmlDocument doc)
+        public bool FromSdxModFileXml(string path, XmlDocument doc)
         {
             XmlElement ele = doc.DocumentElement.GetElement("info");
             if (ele == null)
@@ -99,6 +143,131 @@ namespace DMT
                 }
             }
 
+            return true;
+        }
+
+        public bool FromModInfoXml(string path, XmlDocument doc, bool hasModFile)
+        {
+
+            bool saveIsRequired = hasModFile;
+            XmlElement ele = doc.DocumentElement.GetElement("ModInfo");
+            if (ele == null)
+            {
+                Logging.LogError(path + " Mod config is missing 'ModInfo' node");
+                return false;
+            }
+
+            for (int i = 0; i < requiredFieldsModInfo.Length; i++)
+            {
+                string fieldName = requiredFieldsModInfo[i];
+                if (ele.GetElement(fieldName) == null)
+                {
+                    Logging.LogError(path + " Mod info is missing '" + fieldName + "' node");
+                    return false;
+                }
+            }
+
+
+
+            Name = ele.GetElementValueAttribute("name");
+            Description = ele.GetElementValueAttribute("description");
+            Author = ele.GetElementValueAttribute("author");
+            ModVersion = ele.GetElementValueAttribute("version");
+            HelpFilePath = Path.Combine(this.Location, ele.GetElementValueAttribute("help"));
+            Website = ele.GetElementValueAttribute("Website");
+
+
+            var dmtNode = doc.GetElement("DMT");
+
+            if (dmtNode == null)
+            {
+                dmtNode = doc.DocumentElement.AppendChild(doc.CreateElement("DMT")) as XmlElement;
+                //return true;
+            }
+
+            var dependencies = dmtNode.GetElement("dependencies");
+            if (dependencies == null)
+            {
+                dependencies = dmtNode.AppendChild(doc.CreateElement("dependencies")) as XmlElement;
+            }
+
+            foreach(var d in Dependencies)
+            {
+                var doAdd = true;
+                foreach(XmlElement x in dependencies.ChildNodes)
+                {
+                    if (x.InnerText == d)
+                    {
+                        doAdd = false;
+                        break;
+                    }
+                }
+
+                if (doAdd)
+                {
+                    var e = doc.CreateElement("dependancy");
+                    e.InnerText = d;
+                    dependencies.AppendChild(e);
+                    saveIsRequired = true;
+                }
+            }
+
+            foreach (XmlElement e in dependencies.ChildNodes)
+            {
+                if (!Dependencies.Contains(e.InnerText))
+                {
+                    Dependencies.Add(e.InnerText);
+                }
+            }
+
+            var conflicts = dmtNode.GetElement("conflicts");
+            if (conflicts == null)
+            {
+                conflicts = dmtNode.AppendChild(doc.CreateElement("conflicts")) as XmlElement;
+            }
+            foreach (var d in Conflicts)
+            {
+                var doAdd = true;
+                foreach (XmlElement x in conflicts.ChildNodes)
+                {
+                    if (x.InnerText == d)
+                    {
+                        doAdd = false;
+                        break;
+                    }
+                }
+
+                if (doAdd)
+                {
+                    var e = doc.CreateElement("conflict");
+                    e.InnerText = d;
+                    conflicts.AppendChild(e);
+                    saveIsRequired = true;
+                }
+            }
+
+            foreach (XmlElement e in conflicts.ChildNodes)
+            {
+                if (!Conflicts.Contains(e.InnerText))
+                {
+                    Conflicts.Add(e.InnerText);
+                }
+            }
+
+            if (saveIsRequired)
+            {
+                using (var stream = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                    using (var writer = XmlWriter.Create(stream, new XmlWriterSettings()
+                    {
+                        Indent = true,
+                    }))
+                    {
+                        doc.WriteTo(writer);
+                    }
+                }
+            }
+            UpgradeDetected = saveIsRequired;
             return true;
         }
 

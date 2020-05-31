@@ -29,6 +29,37 @@ namespace DMT.Tasks
 
                 for (int i = 0; i < scriptPaths.Count; ++i)
                 {
+                    var contents = File.ReadAllText(scriptPaths[i]);
+                    var needsUsingUpdate = (contents.ContainsIgnoreCase("using Harmony;") && !contents.ContainsIgnoreCase("using HarmonyLib;"));
+                    var needsStaticCreatorUpdate = contents.ContainsIgnoreCase("HarmonyInstance.Create(");
+         
+
+                    if (BuildSettings.AutoUpdateHarmony)
+                    {
+                        if (needsUsingUpdate)   
+                        {
+                            contents = contents.Replace("using Harmony;", "using HarmonyLib;");
+                        }
+                        if (needsStaticCreatorUpdate)
+                        {
+                            contents = contents.Replace("HarmonyInstance.Create(", "new Harmony(");
+                            contents = contents.Replace("HarmonyInstance", "Harmony");
+                        }
+
+                        if (needsStaticCreatorUpdate || needsUsingUpdate)
+                        {
+                            File.WriteAllText(scriptPaths[i], contents);
+                        }
+                        LogWarning("Attempting auto harmony update on " + scriptPaths[i]);
+                    }
+                    else
+                    {
+                        if (needsUsingUpdate || needsStaticCreatorUpdate)
+                        {
+                            LogWarning(scriptPaths[i]);
+                            LogError($"Harmony 1.0 scripts detected in {mod.Name}. This needs updating to Harmony 2.0 to function correctly. You can try using the 'Attempt Harmony Auto Update' option in DMT");
+                        }
+                    }
                     compilerSettings.Files.Add(scriptPaths[i]);
                 }
 

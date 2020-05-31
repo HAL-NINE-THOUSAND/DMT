@@ -102,6 +102,8 @@ namespace DMTViewer
             if (BuildSettings.Instance.AutoCheckForUpdates)
                 new Thread(() => { UpdateCheckThread(true); }).Start();
 
+            frmMain_Resize(null, null);
+
         }
 
         private void UpdateCheckThread(bool autoCheck)
@@ -137,6 +139,8 @@ namespace DMTViewer
 
 
             lstMods.Items.Clear();
+
+            var hasUpdates = false;
             foreach (var m in BuildSettings.Instance.Mods.OrderBy(d => d.Name))
             {
 
@@ -147,6 +151,18 @@ namespace DMTViewer
                 i.SubItems.Add(m.Description);
 
                 i.Tag = m;
+
+                if (m.UpgradeDetected)
+                {
+                    hasUpdates = true;
+                    OnLog($"ModInfo.xml for '{m.Name}' has been automatically updated to v2.0. The mod.xml file is no longer required and can be deleted", LogType.Warning);
+                }
+
+            }
+
+            if (hasUpdates)
+            {
+                OnLog("Mod authors should check the mod.xml and modinfo.xml files and delete the mod.xml once the update has been confirmed", LogType.Warning);
             }
 
         }
@@ -507,5 +523,14 @@ namespace DMTViewer
             btnDebug.Visible = true;
         }
 
+        private void chkHarmonyUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+
+            BuildSettings.AutoUpdateHarmony = chkHarmonyUpdate.Checked;
+            if (chkHarmonyUpdate.Checked)
+            {
+                MessageBox.Show("Checking this will make DMT try to change harmony scripts to the new 2.0 requirements automatically.\nThis may not work so MAKE A BACKUP.", "BACK IT UP");
+            }
+        }
     }
 }

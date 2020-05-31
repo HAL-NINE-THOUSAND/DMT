@@ -20,6 +20,7 @@ namespace DMT
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         public static bool IsLocalBuild { get; set; }
+        public static bool AutoUpdateHarmony { get; set; }
         public bool AutoCheckForUpdates { get; set; } = true;
 
         public static bool AutoBuild { get; set; }
@@ -92,15 +93,12 @@ namespace DMT
                 foreach (var d in dirs)
                 {
                     var mod = ModInfo.Create(d);
-
                     if (mod == null) continue;
 
                     mod.Enabled = BuildSettings.EnableAllMods || EnabledMods == null || EnabledMods.Contains(mod.Name);
                     Mods.Add(mod);
                 }
-
             }
-
         }
 
     }

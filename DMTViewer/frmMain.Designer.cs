@@ -51,6 +51,7 @@
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
+            this.chkHarmonyUpdate = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -99,7 +100,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1317, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1460, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -160,7 +161,7 @@
             // rtbOutput
             // 
             this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbOutput.Location = new System.Drawing.Point(676, 104);
+            this.rtbOutput.Location = new System.Drawing.Point(819, 104);
             this.rtbOutput.Name = "rtbOutput";
             this.rtbOutput.Size = new System.Drawing.Size(641, 402);
             this.rtbOutput.TabIndex = 3;
@@ -183,12 +184,13 @@
             this.panButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panButtons.Location = new System.Drawing.Point(0, 506);
             this.panButtons.Name = "panButtons";
-            this.panButtons.Size = new System.Drawing.Size(1317, 62);
+            this.panButtons.Size = new System.Drawing.Size(1460, 62);
             this.panButtons.TabIndex = 7;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.chkHarmonyUpdate);
             this.panel1.Controls.Add(this.btnDebug);
             this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.Play);
@@ -199,7 +201,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1317, 80);
+            this.panel1.Size = new System.Drawing.Size(1460, 80);
             this.panel1.TabIndex = 9;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
             // 
@@ -266,11 +268,22 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
+            // chkHarmonyUpdate
+            // 
+            this.chkHarmonyUpdate.AutoSize = true;
+            this.chkHarmonyUpdate.Location = new System.Drawing.Point(674, 53);
+            this.chkHarmonyUpdate.Name = "chkHarmonyUpdate";
+            this.chkHarmonyUpdate.Size = new System.Drawing.Size(170, 17);
+            this.chkHarmonyUpdate.TabIndex = 13;
+            this.chkHarmonyUpdate.Text = "Attempt Harmony Auto Update";
+            this.chkHarmonyUpdate.UseVisualStyleBackColor = true;
+            this.chkHarmonyUpdate.CheckedChanged += new System.EventHandler(this.chkHarmonyUpdate_CheckedChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1317, 568);
+            this.ClientSize = new System.Drawing.Size(1460, 568);
             this.Controls.Add(this.lstMods);
             this.Controls.Add(this.rtbOutput);
             this.Controls.Add(this.panel1);
@@ -315,6 +328,7 @@
         private System.Windows.Forms.Button btnDebug;
         private System.Windows.Forms.ToolStripMenuItem experimentalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableDebuggerToolStripMenuItem;
+        public System.Windows.Forms.CheckBox chkHarmonyUpdate;
     }
 }
 

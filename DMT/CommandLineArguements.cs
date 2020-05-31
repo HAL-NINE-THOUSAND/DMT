@@ -91,6 +91,18 @@
             return false;
         }
     }
+    public class HarmonyUpdateOnly : ICommandLineArgument
+    {
+        public bool Apply(string arg, string next, PatchData data)
+        {
+            if (arg.EqualsIgnoreCase("/UpdateHarmony"))
+            {
+                BuildSettings.AutoUpdateHarmony = true;
+                return true;
+            }
+            return false;
+        }
+    }
     public class EnableAllMods : ICommandLineArgument
     {
         public bool Apply(string arg, string next, PatchData data)
