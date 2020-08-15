@@ -77,7 +77,7 @@ namespace DMT
                 var version = latest.Assets[0].Name.ToLower().Replace("dmtv", "").Replace(".zip", "");
 
                 var thisVersion = BuildSettings.GetVersion();
-                updateAvailable = version != thisVersion;
+                updateAvailable = long.Parse(version.Replace(".", "")) > long.Parse(thisVersion.Replace(".", ""));
                 //var s = "";
                 url = updateAvailable ? latest.Assets[0].BrowserDownloadUrl : "";
                 message = updateAvailable ? "An update is available. " + version : "There is no update available";

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using DMT.Compiler;
 using Newtonsoft.Json;
 
 namespace DMT
@@ -22,6 +23,7 @@ namespace DMT
         public static bool IsLocalBuild { get; set; }
         public static bool AutoUpdateHarmony { get; set; }
         public bool AutoCheckForUpdates { get; set; } = true;
+        public bool UseRoslynCompiler { get; set; } = true;
 
         public static bool AutoBuild { get; set; }
         public static bool AutoBuildComplete { get; set; }
@@ -30,6 +32,7 @@ namespace DMT
         public static bool EnableAllMods { get; set; }
         public static bool DisableLocalisation { get; set; }
 
+        public ICompiler Compiler { get; set; } = new CodeDomCompiler();
 
         public static BuildSettings Instance { get; set; } = new BuildSettings();
 

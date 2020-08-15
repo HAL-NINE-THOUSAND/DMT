@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using DMT;
+using DMT.Compiler;
 
 namespace DMTViewer
 {
@@ -19,40 +20,25 @@ namespace DMTViewer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //if (args == null || args.Length == 0)
-            //args = new[]
-            //{
-            //    "/Autobuild", "/GameFolder",
-            //    @"C:\Games\steamapps\common\7 Days To Die DMT",
-            //    "/ModFolder", @"C:\7DaysToDie\DMT Mods",
-            //};
-
-            //args = "/LinkedPatch /GameFolder \"../../\" /ScriptOnly".Split(' ');
-            //"/Silent /ScriptOnly /GameFolder ../../ /ModFolder ../../Mods"
             if (File.Exists(Application.StartupPath + "/break.txt"))
             {
                 Logging.Log("Breaking...");
                 return -10;
             }
-            //debug localbuild commands
-            //    args = new[] {$@"/GameFolder", @"""C:\Games\steamapps\common\7 Days To Die DMT\""", "/InitialPatch" };
-            //@"/updatesource \""C:\!Projects\DMT\DMTViewer\bin\Debug/Update/\""/updatedestination "C:\!Projects\DMT\DMTViewer\bin\Debug""
-
-            //if (args != null && args.Length >0)
-            //    MessageBox.Show(String.Join("\r\n", args));
 
             try
             {
 
                 BuildSettings.Load();
-
+                BuildSettings.Instance.Compiler = new RoslynCompiler();
                 if (args.Length > 0)
                 {
 
+
                     var data = PatchData.Create(BuildSettings.Instance);
-
-
                     data.ParseArguments(args);
+                    data.Compiler = BuildSettings.Instance.Compiler = BuildSettings.Instance.Compiler  ??  new RoslynCompiler();
+                    //Logging.LogError("compiler set to " + BuildSettings.Instance.Compiler.GetType().Name);
 
                     if (data.IsUpdate)
                     {
@@ -78,7 +64,6 @@ namespace DMTViewer
                         while (BuildSettings.AutoBuildComplete == false)
                         {
                             System.Threading.Thread.Sleep(1000);
-                            //Logging.Log("Thread complete: " + BuildSettings.AutoBuildComplete);
                         }
 
                         return 0;

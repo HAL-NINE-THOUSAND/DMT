@@ -78,6 +78,10 @@ namespace DMT.Compiler
             if (compilerResults.Success == false)
             {
                 Logging.LogError("Compile errors");
+                foreach (var t in compilerResults.Warnings)
+                {
+                    Logging.LogWarning(t);
+                }
                 foreach (var t in compilerResults.Errors)
                 {
                     Logging.LogError(t);

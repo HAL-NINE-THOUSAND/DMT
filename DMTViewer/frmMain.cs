@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using DMT;
+using DMT.Compiler;
 using DMT.Interfaces;
 using DMT.Properties;
 
@@ -248,6 +249,10 @@ namespace DMTViewer
         {
             rtbOutput.Text = "";
 
+            BuildSettings.Instance.Compiler = BuildSettings.Instance.UseRoslynCompiler ? new RoslynCompiler() : (ICompiler)new CodeDomCompiler();
+
+            var isRoslyn = BuildSettings.Instance.Compiler is RoslynCompiler;
+            Logging.Log("Compiler: " + (isRoslyn ? "Roslyn" : "Legacy"));
             if (BuildSettings.IsLocalBuild)
                 new RemoteBuilder().InternalBuild(this);
             else

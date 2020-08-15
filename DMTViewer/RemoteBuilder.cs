@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DMT.Compiler;
 using DMTViewer;
 
 namespace DMT
@@ -68,6 +69,7 @@ namespace DMT
                 if (BuildSettings.AutoBuild) extraArgs += " /ScriptOnly";
                 if (BuildSettings.EnableAllMods) extraArgs += " /EnableAllMods";
                 if (BuildSettings.AutoUpdateHarmony) extraArgs += " /UpdateHarmony";
+                if (BuildSettings.Instance.Compiler is CodeDomCompiler) extraArgs += " /UseLegacyCompiler";
 
                 BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
                 BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);

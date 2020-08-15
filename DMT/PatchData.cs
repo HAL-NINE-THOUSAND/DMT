@@ -50,7 +50,7 @@ namespace DMT
 
         public string BackupFolder { get; set; }
 
-        public ICompiler Compiler { get; set;  }= new CodeDomCompiler();
+        public ICompiler Compiler { get; set;  } = new CodeDomCompiler();
 
         public string BuildFolder { get; set; }
         public string BackupDllLocataion { get; set; }
@@ -78,10 +78,10 @@ namespace DMT
 
         public static PatchData Create(BuildSettings settings)
         {
-            return Create(settings.BackupFolder, settings.ModFolder, String.Empty);
+            return Create(settings.BackupFolder, settings.ModFolder, String.Empty, settings.Compiler);
         }
 
-        public static PatchData Create(string backupFolder, string modFolder, string gameFolder)
+        public static PatchData Create(string backupFolder, string modFolder, string gameFolder, ICompiler compiler)
         {
 
             var ret = new PatchData
@@ -89,6 +89,7 @@ namespace DMT
                 BackupFolder = backupFolder.FolderFormat(),
                 ModFolder = modFolder.FolderFormat(),
                 GameFolder = gameFolder.FolderFormat(),
+                Compiler = compiler,
             };
 
             ret.Init();
@@ -122,7 +123,6 @@ namespace DMT
             resolver.AddSearchDirectory(ManagedFolder);
 
             ModuleDefinition module = ModuleDefinition.ReadModule(path, new ReaderParameters() { AssemblyResolver = resolver, });
-
             return module;
 
         }
@@ -160,7 +160,9 @@ namespace DMT
 
             var asses = AppDomain.CurrentDomain.GetAssemblies().ToList();
 
-            if (BuildSettings.IsLocalBuild && asses.Any(d => d.FullName.Contains("Mods")))
+            asses.RemoveAll(d=> BuildSettings.IsLocalBuild && (d.FullName.Contains("Mods")) || d.FullName.Contains("tmp"));
+
+            if (BuildSettings.IsLocalBuild && (asses.Any(d => d.FullName.Contains("Mods")) || asses.Any(d => d.FullName.Contains("tmp"))))
             {
                 var acs = BackupFolder + "Assembly-CSharp.dll";
                 //File.Copy(acs, "ACSback.dll", true);
@@ -182,6 +184,18 @@ namespace DMT
                 }
                 asses.Add(System.Reflection.Assembly.LoadFrom(acs));
 
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
+                var assemblyPath = Path.GetDirectoryName(Path.ChangeExtension(Path.GetTempFileName(), "dll"));
+                File.Copy(acs, assemblyPath + "/" + Path.GetFileName(acs), true);
+                try
+                {
+                    File.Copy(acs, @"D:/!Projects/DMT/DMTViewer/bin/Debug/" + Path.GetFileName(acs), true);
+                }
+                catch (Exception e)
+                {
+
+                }
             }
 
             var patches = asses
@@ -192,6 +206,7 @@ namespace DMT
                 .OrderBy(d => d.GetCustomAttributes(true).OfType<MinRun>().FirstOrDefault()?.Value ?? int.MaxValue)
                 .Select(d => Activator.CreateInstance(d) as IPatchTask).ToList();
 
+            //Logging.LogError("Got asses");
             //foreach (var t in patches)
             //{
             //    t.PrePatch(data);
@@ -223,6 +238,25 @@ namespace DMT
             return 0;
 
         }
+
+        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            string filename = args.Name.Split(',')[0] + ".dll".ToLower();
+
+            var gameLocation = Path.GetDirectoryName(GameDllLocation);
+            string asmFile = gameLocation + "/"+ filename;
+
+            try
+            {
+                return System.Reflection.Assembly.LoadFrom(asmFile);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
         public IEnumerable<string> FindFiles(string filter)
         {
 

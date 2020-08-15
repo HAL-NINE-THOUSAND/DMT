@@ -1,4 +1,6 @@
-﻿namespace DMT
+﻿using DMT.Compiler;
+
+namespace DMT
 {
   public class CommandGameFolder : ICommandLineArgument
     {
@@ -41,19 +43,31 @@
           }
           return false;
       }
-  }
-  public class UpdateDestinationCommand : ICommandLineArgument
-  {
-      public bool Apply(string arg, string next, PatchData data)
-      {
-          if (arg.EqualsIgnoreCase("/UpdateDestination"))
-          {
-              data.UpdateDestination = next.Replace("\"", "");
-              return true;
-          }
-          return false;
-      }
-  }
+    }
+    public class UpdateDestinationCommand : ICommandLineArgument
+    {
+        public bool Apply(string arg, string next, PatchData data)
+        {
+            if (arg.EqualsIgnoreCase("/UpdateDestination"))
+            {
+                data.UpdateDestination = next.Replace("\"", "");
+                return true;
+            }
+            return false;
+        }
+    }
+    public class UseLegacyCompilerCommand : ICommandLineArgument
+    {
+        public bool Apply(string arg, string next, PatchData data)
+        {
+            if (arg.EqualsIgnoreCase("/UseLegacyCompiler"))
+            {
+                data.Compiler = BuildSettings.Instance.Compiler = new CodeDomCompiler();
+                return true;
+            }
+            return false;
+        }
+    }
     public class CommandAutoBuild : ICommandLineArgument
     {
         public bool Apply(string arg, string next, PatchData data)

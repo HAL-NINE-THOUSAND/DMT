@@ -39,11 +39,12 @@
             this.lstRecentLocations = new System.Windows.Forms.ListBox();
             this.lblRecentLocations = new System.Windows.Forms.Label();
             this.chkUpdates = new System.Windows.Forms.CheckBox();
+            this.chkLegacyCompiler = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(228, 454);
+            this.btnSave.Location = new System.Drawing.Point(228, 505);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -136,11 +137,24 @@
             this.chkUpdates.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkUpdates.UseVisualStyleBackColor = true;
             // 
+            // chkLegacyCompiler
+            // 
+            this.chkLegacyCompiler.AutoSize = true;
+            this.chkLegacyCompiler.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkLegacyCompiler.Location = new System.Drawing.Point(305, 464);
+            this.chkLegacyCompiler.Name = "chkLegacyCompiler";
+            this.chkLegacyCompiler.Size = new System.Drawing.Size(170, 17);
+            this.chkLegacyCompiler.TabIndex = 10;
+            this.chkLegacyCompiler.Text = "Use legacy compiler ( <= A17 )";
+            this.chkLegacyCompiler.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkLegacyCompiler.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(549, 498);
+            this.ClientSize = new System.Drawing.Size(549, 540);
+            this.Controls.Add(this.chkLegacyCompiler);
             this.Controls.Add(this.chkUpdates);
             this.Controls.Add(this.lblRecentLocations);
             this.Controls.Add(this.lstRecentLocations);
@@ -173,5 +187,6 @@
         private System.Windows.Forms.ListBox lstRecentLocations;
         private System.Windows.Forms.Label lblRecentLocations;
         private System.Windows.Forms.CheckBox chkUpdates;
+        private System.Windows.Forms.CheckBox chkLegacyCompiler;
     }
 }

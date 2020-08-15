@@ -95,16 +95,23 @@ namespace DMT.Tasks
 
                 if (!compilerResults.Success)
                 {
+                    foreach (var t in compilerResults.Warnings)
+                    {
+                        Logging.LogWarning(t);
+                    }
                     for (int i = 0; i < compilerResults.Errors.Count; ++i)
                     {
-                        LogWarning(compilerResults.Errors[i]);
+                        LogError(compilerResults.Errors[i]);
                     }
                     LogError("Failed to compile Harmony dll " + filename);
                     return false;
                 }
 
+                if (!String.IsNullOrEmpty(compilerResults.AssemblyLocation))
+                    File.Copy(compilerResults.AssemblyLocation, compilerSettings.OutputPath, true);
+
                 // Log("Harmony dll compile successful");
-                
+
             }
 
             return true;

@@ -52,14 +52,20 @@ namespace DMT.Tasks
 
             if (compilerResults.Success == false)
             {
+                foreach (var t in compilerResults.Warnings)
+                {
+                    Logging.LogWarning(t);
+                }
                 for (int i = 0; i < compilerResults.Errors.Count; ++i)
                 {
-                    LogWarning(compilerResults.Errors[i]);
+                    LogError(compilerResults.Errors[i]);
                 }
                 LogError("Failed to compile Mods.dll");
                 return false;
             }
 
+            if (!String.IsNullOrEmpty(compilerResults.AssemblyLocation))
+                File.Copy(compilerResults.AssemblyLocation, data.ModsDllTempLocation, true);
             Log("Mods.dll compile successful");
             return true;
 

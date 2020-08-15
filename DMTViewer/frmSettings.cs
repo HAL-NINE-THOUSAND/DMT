@@ -46,6 +46,7 @@ namespace DMT
             txtModFolder.Text = BuildSettings.Instance.ModFolder;
             OldModFolder = txtModFolder.Text;
             chkUpdates.Checked = BuildSettings.Instance.AutoCheckForUpdates;
+            chkLegacyCompiler.Checked = !BuildSettings.Instance.UseRoslynCompiler;
             var builds = BuildSettings.Instance.GameFolders ?? new List<string>();
             
             foreach (var s in builds)
@@ -104,6 +105,7 @@ namespace DMT
             var modFolderExists = Directory.Exists(settings.ModFolder);
 
             BuildSettings.Instance.AutoCheckForUpdates = chkUpdates.Checked;
+            BuildSettings.Instance.UseRoslynCompiler = !chkLegacyCompiler.Checked;
 
             settings.GameFolders = new List<string>();
 
