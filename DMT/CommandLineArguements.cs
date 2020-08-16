@@ -68,6 +68,18 @@ namespace DMT
             return false;
         }
     }
+    public class BuildIdCommand : ICommandLineArgument
+    {
+        public bool Apply(string arg, string next, PatchData data)
+        {
+            if (arg.EqualsIgnoreCase("/BuildId"))
+            {
+                PatchData.BuildId = next;
+                return true;
+            }
+            return false;
+        }
+    }
     public class CommandAutoBuild : ICommandLineArgument
     {
         public bool Apply(string arg, string next, PatchData data)

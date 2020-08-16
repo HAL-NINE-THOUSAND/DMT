@@ -12,6 +12,7 @@ namespace DMT.Compiler
         public List<string> Files = new List<string>();
         public List<string> References = new List<string>();
         public string OutputPath;
+        public string AssemblyName;
         public bool GenerateInMemory;
         public bool IsDedicateServerBuild;
 

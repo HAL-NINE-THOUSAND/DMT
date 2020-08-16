@@ -68,8 +68,8 @@ namespace DMT.Tasks
                 compilerSettings.AddReference(startPath + "/0Harmony.dll");
 
                 var filename = $"Harmony-{mod.Name.MakeSafeFilename()}.dll";
-                compilerSettings.OutputPath = mod.Location + "/Harmony/" + filename;
-
+                compilerSettings.OutputPath = data.BuildFolder + filename;
+                                
                 var dllRefs = Directory.GetFiles(data.ManagedFolder, "*.dll").Where(d => !d.EndsWith("/Mods.dll")).ToArray();
                 compilerSettings.AddReferences(dllRefs);
 
@@ -89,7 +89,7 @@ namespace DMT.Tasks
                     compilerSettings.AddReference(dllPath);
 
                 }
-
+                compilerSettings.AssemblyName = Path.GetFileNameWithoutExtension(compilerSettings.OutputPath);
                 var compilerResults = data.Compiler.Compile(data, compilerSettings);
                // Logging.LogInfo($"Built in {compilerResults.Duration}ms");
 
@@ -107,8 +107,7 @@ namespace DMT.Tasks
                     return false;
                 }
 
-                if (!String.IsNullOrEmpty(compilerResults.AssemblyLocation))
-                    File.Copy(compilerResults.AssemblyLocation, compilerSettings.OutputPath, true);
+                File.Copy(compilerSettings.OutputPath, mod.Location + "/Harmony/" + filename, true);
 
                 // Log("Harmony dll compile successful");
 

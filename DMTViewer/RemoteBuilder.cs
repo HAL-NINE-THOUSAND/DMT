@@ -41,8 +41,8 @@ namespace DMT
             data.RunSection = RunSection.FinalPatch;
             BuildSettings.Instance.Init();
             ret = data.Patch();
-            
 
+            Form?.EnableButtons();
         }
 
         internal void RemoteBuild(frmMain frm, PatchData data = null)
@@ -70,10 +70,10 @@ namespace DMT
                 if (BuildSettings.EnableAllMods) extraArgs += " /EnableAllMods";
                 if (BuildSettings.AutoUpdateHarmony) extraArgs += " /UpdateHarmony";
                 if (BuildSettings.Instance.Compiler is CodeDomCompiler) extraArgs += " /UseLegacyCompiler";
-
-                BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
-                BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
-                BuildArguments.Add($@"/FinalPatch /GameFolder ""{data.GameFolder}"" /ModFolder ""{data.ModFolder}""" + extraArgs);
+                
+                BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}"" /BuildId {PatchData.BuildId} /ModFolder ""{data.ModFolder}""" + extraArgs);
+                BuildArguments.Add($@"/LinkedPatch /GameFolder ""{data.GameFolder}"" /BuildId {PatchData.BuildId} /ModFolder ""{data.ModFolder}""" + extraArgs);
+                BuildArguments.Add($@"/FinalPatch /GameFolder ""{data.GameFolder}"" /BuildId {PatchData.BuildId} /ModFolder ""{data.ModFolder}""" + extraArgs);
 
                 if (BuildSettings.Instance.AutoPlay)
                     BuildArguments.Add($@"startprocess {data.StartPath}");

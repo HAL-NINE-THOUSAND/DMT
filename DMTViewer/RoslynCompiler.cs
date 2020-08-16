@@ -19,6 +19,16 @@ namespace DMT.Compiler
         public CompilerResult Compile(PatchData data, CompilerSettings settings)
         {
 
+            CompilerResult scriptCompilerResults = new CompilerResult();
+
+            if (File.Exists(settings.OutputPath))
+            {
+                scriptCompilerResults.Assembly = Assembly.LoadFile(settings.OutputPath);
+                scriptCompilerResults.Success = true;
+                return scriptCompilerResults;
+            }
+
+
             Logging.Log("Compiling Roslyn Scripts assembly for " + data.RunSection + "...");
 
             var trees = new List<SyntaxTree>();
@@ -29,29 +39,26 @@ namespace DMT.Compiler
             }
             //var syntaxTree = SyntaxFactory.ParseSyntaxTree(SourceText.From(sourceCode));
 
-            var assemblyPath = Path.ChangeExtension(Path.GetTempFileName(), "dll");
-            
-            var compilation = CSharpCompilation.Create(Path.GetFileName(assemblyPath))
-                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            var assName = settings.AssemblyName;
+
+            var compilation = CSharpCompilation.Create(assName)
+                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, false, assName))
                  .AddReferences(
                     settings.References.Select(d => MetadataReference.CreateFromFile(d))
                 )
                 .AddSyntaxTrees(trees);
 
-
-            CompilerResult scriptCompilerResults = new CompilerResult();
-
-            scriptCompilerResults.AssemblyLocation = assemblyPath;
+            //scriptCompilerResults.AssemblyLocation = assemblyPath;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var result = compilation.Emit(assemblyPath);
+            var result = compilation.Emit(settings.OutputPath);
             stopwatch.Stop();
 
 
             if (result.Success)
             {
-                scriptCompilerResults.Assembly = Assembly.LoadFile(assemblyPath);
+                scriptCompilerResults.Assembly = Assembly.LoadFile(settings.OutputPath);
                 scriptCompilerResults.Success = true;
                 //File.Copy(assemblyPath, data.ModsDllTempLocation, true); 
             }
@@ -83,6 +90,8 @@ namespace DMT.Compiler
                 return true;
             }
 
+            settings.AssemblyName = "PatchScripts";
+            settings.OutputPath = data.BuildFolder + settings.AssemblyName + ".dll";
             var compilerResults = Compile(data, settings); // ScriptCompiler.Compile(compilerSettings, Plugin.DataDirectory, gamePath, false);
             Logging.LogInfo($"Built patch file in {compilerResults.Duration}ms");
 

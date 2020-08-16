@@ -37,6 +37,7 @@ namespace DMTViewer
 
                     var data = PatchData.Create(BuildSettings.Instance);
                     data.ParseArguments(args);
+                    data.Init();
                     data.Compiler = BuildSettings.Instance.Compiler = BuildSettings.Instance.Compiler  ??  new RoslynCompiler();
                     //Logging.LogError("compiler set to " + BuildSettings.Instance.Compiler.GetType().Name);
 

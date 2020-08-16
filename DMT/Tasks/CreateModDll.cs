@@ -47,6 +47,7 @@ namespace DMT.Tasks
                 Helper.CopyFileToDir(dllPaths[i], data.ManagedFolder);
             }
 
+            compilerSettings.AssemblyName = "Mods";
             var compilerResults = data.Compiler.Compile(data, compilerSettings);
             Logging.LogInfo($"Built in {compilerResults.Duration}ms");
 

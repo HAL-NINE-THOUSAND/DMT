@@ -14,6 +14,7 @@ namespace DMT
     {
 
         public const string AssemblyFilename = "Assembly-CSharp.dll";
+        public static string BuildId { get; set; }
 
         public string UpdateSource { get; set; } = String.Empty;
         public string UpdateDestination { get; set; } = String.Empty;
@@ -92,7 +93,6 @@ namespace DMT
                 Compiler = compiler,
             };
 
-            ret.Init();
             return ret;
 
         }
@@ -100,7 +100,12 @@ namespace DMT
         public void Init()
         {
 
-            BuildFolder = Path.GetTempPath() + "7DTD-DMT/";
+            if (BuildId == null)
+            {
+                BuildId = Guid.NewGuid().ToString(); 
+            }
+
+            BuildFolder = Path.GetTempPath() + "7DTD-DMT/" + BuildId + "/";
             Helper.MakeFolder(BuildFolder);
             
             

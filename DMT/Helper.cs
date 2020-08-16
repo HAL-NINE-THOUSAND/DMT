@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 
@@ -13,6 +14,37 @@ namespace DMT
             if (!Directory.Exists(path)) return;
             Directory.Delete(path, true);
         }
+
+        public static string GetRandomString(int length)
+        {
+            Random random = new Random(DateTime.Now.GetHashCode());
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
+        public static void ClearTempFolder()
+        {
+            var dirs = new DirectoryInfo(Path.GetTempPath() + "7DTD-DMT/").GetDirectories();
+
+            Logging.LogInfo("Clearing temp folder");
+
+            foreach (var d in dirs)
+            {
+                try
+                {
+
+                    d.Delete(true);
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+        }
+
 
         public static string StartFolder()
         {

@@ -92,7 +92,7 @@ namespace DMTViewer
 
             this.Icon = Resources.HAL9000;
             LoadModsUI();
-
+            Helper.ClearTempFolder();
             if (!Directory.Exists(BuildSettings.Instance.ModFolder))
             {
                 this.BeginInvoke((MethodInvoker)this.ShowSettings);
@@ -244,15 +244,16 @@ namespace DMTViewer
             btnBuild.Enabled = true;
             Play.Enabled = true;
         }
-
+        
         private void btnBuild_Click(object sender, EventArgs e)
         {
             rtbOutput.Text = "";
 
+            Helper.ClearTempFolder();
             BuildSettings.Instance.Compiler = BuildSettings.Instance.UseRoslynCompiler ? new RoslynCompiler() : (ICompiler)new CodeDomCompiler();
-
-            var isRoslyn = BuildSettings.Instance.Compiler is RoslynCompiler;
-            Logging.Log("Compiler: " + (isRoslyn ? "Roslyn" : "Legacy"));
+            PatchData.BuildId = Helper.GetRandomString(8);
+            //var isRoslyn = BuildSettings.Instance.Compiler is RoslynCompiler;
+            //Logging.Log("Compiler: " + (isRoslyn ? "Roslyn" : "Legacy"));
             if (BuildSettings.IsLocalBuild)
                 new RemoteBuilder().InternalBuild(this);
             else
