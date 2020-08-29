@@ -26,7 +26,14 @@ namespace DMT
 
         public static void ClearTempFolder()
         {
-            var dirs = new DirectoryInfo(Path.GetTempPath() + "7DTD-DMT/").GetDirectories();
+            var tempPath = Path.GetTempPath() + "7DTD-DMT/";
+
+            if (!Directory.Exists(tempPath))
+            {
+                return;
+            }
+
+            var dirs = new DirectoryInfo(tempPath).GetDirectories();
 
             Logging.LogInfo("Clearing temp folder");
 

@@ -35,7 +35,8 @@ namespace DMT.Compiler
             foreach (var f in settings.Files)
             {
                 var sourceCode = System.IO.File.ReadAllText(f);
-                trees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(sourceCode)));
+                var tree = SyntaxFactory.ParseSyntaxTree(SourceText.From(sourceCode)).WithFilePath(f);
+                trees.Add(tree);
             }
             //var syntaxTree = SyntaxFactory.ParseSyntaxTree(SourceText.From(sourceCode));
 
@@ -66,7 +67,9 @@ namespace DMT.Compiler
             foreach (var d in result.Diagnostics)
             {
                 if (d.Severity == DiagnosticSeverity.Error)
+                { 
                     scriptCompilerResults.Errors.Add(d.ToString());
+                }
                 else
                 {
                     if (d.ToString().Contains("Assuming assembly reference 'mscorlib") && (scriptCompilerResults.Warnings.Any(e => e.Contains("Assuming assembly reference 'mscorlib"))))
