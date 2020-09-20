@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -537,6 +538,18 @@ namespace DMTViewer
             {
                 MessageBox.Show("Checking this will make DMT try to change harmony scripts to the new 2.0 requirements automatically.\nThis may not work so MAKE A BACKUP.", "BACK IT UP");
             }
+        }
+
+        private void manualUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var result = diag.ShowDialog();
+
+            if (result != DialogResult.OK) return;
+
+            var zipLocation = Application.StartupPath + "/Update/";
+            var zipBytes = System.IO.File.ReadAllBytes(diag.FileName);
+            frmUpdate.StartUpdate(zipBytes);
         }
     }
 }

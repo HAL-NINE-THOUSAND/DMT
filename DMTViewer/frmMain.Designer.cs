@@ -45,13 +45,15 @@
             this.btnModsFolder = new System.Windows.Forms.Button();
             this.panButtons = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkHarmonyUpdate = new System.Windows.Forms.CheckBox();
             this.btnDebug = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.Play = new System.Windows.Forms.Button();
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
-            this.chkHarmonyUpdate = new System.Windows.Forms.CheckBox();
+            this.manualUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.diag = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -138,6 +140,8 @@
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manualUpdateToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
             this.toolStripMenuItem1.Text = "Check for updates";
@@ -205,6 +209,17 @@
             this.panel1.TabIndex = 9;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
             // 
+            // chkHarmonyUpdate
+            // 
+            this.chkHarmonyUpdate.AutoSize = true;
+            this.chkHarmonyUpdate.Location = new System.Drawing.Point(674, 53);
+            this.chkHarmonyUpdate.Name = "chkHarmonyUpdate";
+            this.chkHarmonyUpdate.Size = new System.Drawing.Size(170, 17);
+            this.chkHarmonyUpdate.TabIndex = 13;
+            this.chkHarmonyUpdate.Text = "Attempt Harmony Auto Update";
+            this.chkHarmonyUpdate.UseVisualStyleBackColor = true;
+            this.chkHarmonyUpdate.CheckedChanged += new System.EventHandler(this.chkHarmonyUpdate_CheckedChanged);
+            // 
             // btnDebug
             // 
             this.btnDebug.Location = new System.Drawing.Point(1124, 12);
@@ -268,16 +283,17 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
-            // chkHarmonyUpdate
+            // manualUpdateToolStripMenuItem
             // 
-            this.chkHarmonyUpdate.AutoSize = true;
-            this.chkHarmonyUpdate.Location = new System.Drawing.Point(674, 53);
-            this.chkHarmonyUpdate.Name = "chkHarmonyUpdate";
-            this.chkHarmonyUpdate.Size = new System.Drawing.Size(170, 17);
-            this.chkHarmonyUpdate.TabIndex = 13;
-            this.chkHarmonyUpdate.Text = "Attempt Harmony Auto Update";
-            this.chkHarmonyUpdate.UseVisualStyleBackColor = true;
-            this.chkHarmonyUpdate.CheckedChanged += new System.EventHandler(this.chkHarmonyUpdate_CheckedChanged);
+            this.manualUpdateToolStripMenuItem.Name = "manualUpdateToolStripMenuItem";
+            this.manualUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manualUpdateToolStripMenuItem.Text = "ManualUpdate";
+            this.manualUpdateToolStripMenuItem.Click += new System.EventHandler(this.manualUpdateToolStripMenuItem_Click);
+            // 
+            // diag
+            // 
+            this.diag.DefaultExt = "zip";
+            this.diag.FileName = "diag";
             // 
             // frmMain
             // 
@@ -329,6 +345,8 @@
         private System.Windows.Forms.ToolStripMenuItem experimentalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableDebuggerToolStripMenuItem;
         public System.Windows.Forms.CheckBox chkHarmonyUpdate;
+        private System.Windows.Forms.ToolStripMenuItem manualUpdateToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog diag;
     }
 }
 

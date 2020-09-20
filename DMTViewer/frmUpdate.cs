@@ -36,51 +36,61 @@ namespace DMT
                 Application.DoEvents();
                 WebClient client = new WebClient();
                 var zipBytes = client.DownloadData(UpdateInfo.DownloadUrl);
-
+                lblMessage.Text = "Extracting...";
+                StartUpdate(zipBytes);
                 //zipBytes = File.ReadAllBytes(@"C:\!Projects\DMT\DMTViewer\bin\Debug\Debug.zip");
 
-                var zipLocation = Application.StartupPath + "/Update/";
-                if (Directory.Exists(zipLocation))
-                    Directory.Delete(zipLocation, true);
-
-                Directory.CreateDirectory(zipLocation);
-
-                lblMessage.Text = "Extracting...";
-                Application.DoEvents();
-                using (MemoryStream stream = new MemoryStream(zipBytes))
-                {
-                    using (ZipArchive arch = new ZipArchive(stream))
-                    {
-                        foreach (var entry in arch.Entries)
-                        {
-
-                            if (entry.Name != String.Empty)
-                            {
-
-                                var fullPath = Path.Combine(zipLocation, entry.FullName);
-                                var dir = Path.GetDirectoryName(fullPath);
-
-                                Directory.CreateDirectory(dir);
-                                var name = entry.FullName;
-                                entry.ExtractToFile(fullPath);
-                            }
-                        }
-                    }
-                }
-
-                ProcessStartInfo info = new ProcessStartInfo();
-                info.Arguments = $"/updatesource \"{zipLocation}\" /updatedestination \"{Application.StartupPath}\"";
-                //info.CreateNoWindow = true;
-                info.FileName = zipLocation + "DMTViewer.exe";
-
-                Process.Start(info);
-                Application.Exit();
             }
             catch (Exception exception)
             {
                 MessageBox.Show("Something went wrong while updating: " + exception.Message + "\nYou can download the release here: " + UpdateInfo.DownloadUrl);
             }
 
+        }
+
+        public static void StartUpdate(byte[] zipBytes)
+        {
+
+            var zipLocation = Application.StartupPath + "/Update/";
+            if (Directory.Exists(zipLocation))
+                Directory.Delete(zipLocation, true);
+
+            Directory.CreateDirectory(zipLocation);
+
+            Application.DoEvents();
+            using (MemoryStream stream = new MemoryStream(zipBytes))
+            {
+                using (ZipArchive arch = new ZipArchive(stream))
+                {
+                    foreach (var entry in arch.Entries)
+                    {
+
+                        if (entry.Name != String.Empty)
+                        {
+
+                            var fullPath = Path.Combine(zipLocation, entry.FullName);
+                            var dir = Path.GetDirectoryName(fullPath);
+
+                            Directory.CreateDirectory(dir);
+                            var name = entry.FullName;
+                            entry.ExtractToFile(fullPath, true);
+                        }
+                    }
+                }
+            }
+
+            ProcessStartInfo info = new ProcessStartInfo();
+            //info.Arguments = $"/updatesource \"{zipLocation}\" /updatedestination \"{Application.StartupPath}\"";
+            ////info.CreateNoWindow = true;
+            //info.FileName = zipLocation + "DMTViewer.exe";
+
+            info.Arguments = $"\"{zipLocation}\" \"{Application.StartupPath}\" \"{Application.StartupPath}\\DMTViewer.exe\"";
+            //info.CreateNoWindow = true;
+            info.FileName = Application.StartupPath + "/UpdateMover.exe";
+
+
+            Process.Start(info);
+            Application.Exit();
         }
 
         private void FrmUpdate_Load(object sender, EventArgs e)

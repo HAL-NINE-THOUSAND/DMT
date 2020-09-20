@@ -28,7 +28,7 @@ namespace DMTViewer
 
             try
             {
-
+                Logging.ResetLog();
                 BuildSettings.Load();
                 BuildSettings.Instance.Compiler = new RoslynCompiler();
                 if (args.Length > 0)

@@ -29,31 +29,77 @@ namespace DMT
 
         public static void Update(string sourceFolder, string destinationFolder)
         {
+            ProcessStartInfo info = new ProcessStartInfo();
+            //info.Arguments = $"/updatesource \"{zipLocation}\" /updatedestination \"{Application.StartupPath}\"";
+            ////info.CreateNoWindow = true;
+            //info.FileName = zipLocation + "DMTViewer.exe";
 
+            var updateLocation = sourceFolder + "/UpdateMover.exe";
+            var updateDest = destinationFolder + "/UpdateMover.exe";
+
+            if (File.Exists(updateLocation))
+            {
+                try
+                {
+                    File.Copy(updateLocation, updateDest, true);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Update mover file failed to copy. Please restart DMT and try again");
+                }
+            }
+
+
+            info.Arguments = $"\"{sourceFolder}\" \"{destinationFolder}\" \"{destinationFolder}\\DMTViewer.exe\"";
+            //info.CreateNoWindow = true;
+            info.FileName = updateDest;
+
+            Process.Start(info);
+            System.Windows.Forms.Application.Exit();
+        }
+
+        public static void Updateinternal(string sourceFolder, string destinationFolder)
+        {
+
+            string from;
+            string dest;
             try
             {
-
+                Logging.LogAction = Logging.CommandLine;
+                Logging.Log($"copy folder {destinationFolder}");
                 destinationFolder = destinationFolder.FolderFormat();
 
                 Directory.CreateDirectory(destinationFolder);
 
                 foreach (var f in Directory.GetFiles(sourceFolder))
                 {
-                    var copyTo = destinationFolder + Path.GetFileName(f);
-                    File.Copy(f, copyTo, true);
+                    from = f;
+                    dest = destinationFolder + Path.GetFileName(f);
+                    Logging.Log($"copy {from} => {dest}");
+                    try
+                    {
+                        File.Copy(f, dest, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Logging.LogError("Copy Failed: " + e.Message);
+                    }
                 }
                 foreach (var f in Directory.GetDirectories(sourceFolder))
                 {
 
-                    Update(sourceFolder.FolderFormat() + new DirectoryInfo(f).Name, f);
+                    Updateinternal(sourceFolder.FolderFormat() + new DirectoryInfo(f).Name, f);
                 }
 
-                Process.Start(destinationFolder + "DMTViewer.exe");
+                if (System.IO.File.Exists(destinationFolder + "DMTViewer.exe"))
+                {
+                    Process.Start(destinationFolder + "DMTViewer.exe");
+                }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
-
+                Logging.LogError("Copy Folder Failed: " + e.Message);
             }
 
         }

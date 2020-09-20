@@ -72,6 +72,12 @@ namespace DMT
         {
             //File.WriteAllText(LogPath, "");
         }
+
+        public static void ResetLog()
+        {
+            File.WriteAllText(LogFile, string.Empty);
+        }
+
         public static void CommandLine(string s)
         {
 
@@ -79,6 +85,7 @@ namespace DMT
             //Console.WriteLine("Console: '{0}'", s);
             Console.WriteLine(s);
 
+            File.AppendAllText(LogFile, s + "\n");
 
             //var attempts = 0;
 
