@@ -120,7 +120,7 @@ namespace DMT.Tasks
 </xml>");
                     }
 
-                    if (BuildSettings.ScriptOnly)
+                    if (BuildSettings.ScriptOnly || BuildSettings.SkipAssetCopy)
                         continue;
 
                     var foldersToCopy = new List<string>()
@@ -135,6 +135,7 @@ namespace DMT.Tasks
                         "Worlds",
                         "Prefabs",
                     };
+
 
                     foreach (var s in foldersToCopy)
                     {

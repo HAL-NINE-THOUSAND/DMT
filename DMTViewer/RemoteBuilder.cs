@@ -69,6 +69,7 @@ namespace DMT
                 if (BuildSettings.AutoBuild) extraArgs += " /ScriptOnly";
                 if (BuildSettings.EnableAllMods) extraArgs += " /EnableAllMods";
                 if (BuildSettings.AutoUpdateHarmony) extraArgs += " /UpdateHarmony";
+                if (BuildSettings.SkipAssetCopy) extraArgs += " /SkipAssetCopy";
                 if (BuildSettings.Instance.Compiler is CodeDomCompiler) extraArgs += " /UseLegacyCompiler";
                 
                 BuildArguments.Add($@"/InitialPatch /GameFolder ""{data.GameFolder}"" /BuildId {PatchData.BuildId} /ModFolder ""{data.ModFolder}""" + extraArgs);

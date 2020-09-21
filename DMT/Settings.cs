@@ -29,6 +29,7 @@ namespace DMT
         public static bool AutoBuildComplete { get; set; }
         public static bool IsSilent { get; set; }
         public static bool ScriptOnly { get; set; }
+        public static bool SkipAssetCopy { get; set; }
         public static bool EnableAllMods { get; set; }
         public static bool DisableLocalisation { get; set; }
 

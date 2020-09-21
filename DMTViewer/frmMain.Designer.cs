@@ -39,6 +39,7 @@
             this.mnuVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.madeByMachineElvesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.experimentalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableDebuggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
@@ -52,8 +53,8 @@
             this.chkPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
-            this.manualUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diag = new System.Windows.Forms.OpenFileDialog();
+            this.chkAssetCopy = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -147,6 +148,13 @@
             this.toolStripMenuItem1.Text = "Check for updates";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
+            // manualUpdateToolStripMenuItem
+            // 
+            this.manualUpdateToolStripMenuItem.Name = "manualUpdateToolStripMenuItem";
+            this.manualUpdateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.manualUpdateToolStripMenuItem.Text = "ManualUpdate";
+            this.manualUpdateToolStripMenuItem.Click += new System.EventHandler(this.manualUpdateToolStripMenuItem_Click);
+            // 
             // experimentalToolStripMenuItem
             // 
             this.experimentalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -194,6 +202,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.chkAssetCopy);
             this.panel1.Controls.Add(this.chkHarmonyUpdate);
             this.panel1.Controls.Add(this.btnDebug);
             this.panel1.Controls.Add(this.btnRefresh);
@@ -283,17 +292,21 @@
             this.btnBuild.UseVisualStyleBackColor = true;
             this.btnBuild.Click += new System.EventHandler(this.btnBuild_Click);
             // 
-            // manualUpdateToolStripMenuItem
-            // 
-            this.manualUpdateToolStripMenuItem.Name = "manualUpdateToolStripMenuItem";
-            this.manualUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.manualUpdateToolStripMenuItem.Text = "ManualUpdate";
-            this.manualUpdateToolStripMenuItem.Click += new System.EventHandler(this.manualUpdateToolStripMenuItem_Click);
-            // 
             // diag
             // 
             this.diag.DefaultExt = "zip";
             this.diag.FileName = "diag";
+            // 
+            // chkAssetCopy
+            // 
+            this.chkAssetCopy.AutoSize = true;
+            this.chkAssetCopy.Location = new System.Drawing.Point(454, 53);
+            this.chkAssetCopy.Name = "chkAssetCopy";
+            this.chkAssetCopy.Size = new System.Drawing.Size(103, 17);
+            this.chkAssetCopy.TabIndex = 14;
+            this.chkAssetCopy.Text = "Skip Asset Copy";
+            this.chkAssetCopy.UseVisualStyleBackColor = true;
+            this.chkAssetCopy.CheckedChanged += new System.EventHandler(this.chkAssetCopy_CheckedChanged);
             // 
             // frmMain
             // 
@@ -347,6 +360,7 @@
         public System.Windows.Forms.CheckBox chkHarmonyUpdate;
         private System.Windows.Forms.ToolStripMenuItem manualUpdateToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog diag;
+        public System.Windows.Forms.CheckBox chkAssetCopy;
     }
 }
 

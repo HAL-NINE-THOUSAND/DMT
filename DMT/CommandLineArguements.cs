@@ -129,6 +129,19 @@ namespace DMT
             return false;
         }
     }
+    public class SkipAssetCopy : ICommandLineArgument
+    {
+        public bool Apply(string arg, string next, PatchData data)
+        {
+            if (arg.EqualsIgnoreCase("/SkipAssetCopy"))
+            {
+                BuildSettings.SkipAssetCopy = true;
+                return true;
+            }
+            return false;
+        }
+    }
+
     public class EnableAllMods : ICommandLineArgument
     {
         public bool Apply(string arg, string next, PatchData data)

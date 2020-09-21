@@ -551,5 +551,10 @@ namespace DMTViewer
             var zipBytes = System.IO.File.ReadAllBytes(diag.FileName);
             frmUpdate.StartUpdate(zipBytes);
         }
+
+        private void chkAssetCopy_CheckedChanged(object sender, EventArgs e)
+        {
+            BuildSettings.SkipAssetCopy = chkAssetCopy.Checked;
+        }
     }
 }
