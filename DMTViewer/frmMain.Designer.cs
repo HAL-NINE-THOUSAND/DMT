@@ -55,6 +55,7 @@
             this.btnBuild = new System.Windows.Forms.Button();
             this.diag = new System.Windows.Forms.OpenFileDialog();
             this.chkAssetCopy = new System.Windows.Forms.CheckBox();
+            this.makeReleaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -120,7 +121,8 @@
             this.mnuVersion,
             this.madeByMachineElvesToolStripMenuItem1,
             this.toolStripMenuItem1,
-            this.experimentalToolStripMenuItem});
+            this.experimentalToolStripMenuItem,
+            this.makeReleaseToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
@@ -308,6 +310,13 @@
             this.chkAssetCopy.UseVisualStyleBackColor = true;
             this.chkAssetCopy.CheckedChanged += new System.EventHandler(this.chkAssetCopy_CheckedChanged);
             // 
+            // makeReleaseToolStripMenuItem
+            // 
+            this.makeReleaseToolStripMenuItem.Name = "makeReleaseToolStripMenuItem";
+            this.makeReleaseToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.makeReleaseToolStripMenuItem.Text = "MakeRelease";
+            this.makeReleaseToolStripMenuItem.Click += new System.EventHandler(this.makeReleaseToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -361,6 +370,7 @@
         private System.Windows.Forms.ToolStripMenuItem manualUpdateToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog diag;
         public System.Windows.Forms.CheckBox chkAssetCopy;
+        private System.Windows.Forms.ToolStripMenuItem makeReleaseToolStripMenuItem;
     }
 }
 

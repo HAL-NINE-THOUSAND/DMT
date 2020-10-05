@@ -9,6 +9,11 @@ namespace DMT
 {
     public class Helper
     {
+
+        public static bool IsDevBuild { get {
+                var loc = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName; var ret = File.Exists(loc + "/DMT.dll.config"); 
+                return ret; } }
+
         public static void RemoveFolder(string path)
         {
             if (!Directory.Exists(path)) return;

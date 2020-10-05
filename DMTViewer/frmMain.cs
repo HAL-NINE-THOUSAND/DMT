@@ -104,6 +104,10 @@ namespace DMTViewer
             if (BuildSettings.Instance.AutoCheckForUpdates)
                 new Thread(() => { UpdateCheckThread(true); }).Start();
 
+            if (Helper.IsDevBuild == false)
+            {
+                makeReleaseToolStripMenuItem.Visible = false;
+            }
             frmMain_Resize(null, null);
 
         }
@@ -555,6 +559,36 @@ namespace DMTViewer
         private void chkAssetCopy_CheckedChanged(object sender, EventArgs e)
         {
             BuildSettings.SkipAssetCopy = chkAssetCopy.Checked;
+        }
+
+        private void makeReleaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var curr = Application.StartupPath + "/";
+            var loc = Application.StartupPath + "/DMTv" + BuildSettings.GetVersion() + "/";
+
+            Directory.CreateDirectory(loc);
+
+            BuildFile(curr, loc, "DMTViewer.exe");
+            BuildFile(curr, loc, "DMTViewer.exe.config");
+            BuildFile(curr, loc, "UpdateMover.exe");
+
+            foreach(var f in Directory.GetFiles(curr))
+            {
+                if (f.ToLower().EndsWith(".dll"))
+                {
+                    var name = Path.GetFileName(f);
+                    BuildFile(curr, loc, name);
+                }
+            }
+
+            Helper.CopyFolder(curr + "UnityResources", loc + "UnityResources", true);
+
+        }
+
+        private void BuildFile(string from, string to, string name)
+        {
+            File.Copy(from + name, to + name, true);
         }
     }
 }
