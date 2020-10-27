@@ -126,7 +126,7 @@ namespace DMT
                 updateAvailable = long.Parse(version.Replace(".", "")) > long.Parse(thisVersion.Replace(".", ""));
                 //var s = "";
                 url = updateAvailable ? latest.Assets[0].BrowserDownloadUrl : "";
-                message = updateAvailable ? "An update is available. " + version : "There is no update available";
+                message = updateAvailable ? "An update is available. " + version + "\r\n\r\n" + latest.Body : "There is no update available";
             }
             catch (Exception boo)
             {

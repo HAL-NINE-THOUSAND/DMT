@@ -23,6 +23,11 @@ namespace DMT
             lblMessage.Text = info.Message;
             btnDownload.Enabled = info.DownloadUrl != String.Empty;
 
+            this.ClientSize = new Size(lblMessage.Width + 20, lblMessage.Top + lblMessage.Size.Height + panel1.Height + 20);
+
+            btnDownload.Left = this.ClientSize.Width / 2 - btnDownload.Width / 2;
+            chkUpdate.Left = this.ClientSize.Width / 2 - chkUpdate.Width / 2;
+
         }
 
         private void BtnDownload_Click(object sender, EventArgs e)
