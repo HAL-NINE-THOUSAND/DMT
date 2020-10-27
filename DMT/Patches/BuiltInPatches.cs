@@ -29,12 +29,12 @@ namespace DMT.Patches
         {
             Logging.Log("Hooking harmony");
 
-            var gm = game.Types.FirstOrDefault(d => d.Name == "GameManager");
-            var awakeMethod = gm.Methods.First(d => d.Name == "Awake");
+            var steam = game.Types.FirstOrDefault(d => d.Name == "Steam");
+            var singletonCreated = steam.Methods.First(d => d.Name == "singletonCreated");
             var helper = mod.Types.First(d => d.Name == "DMTChanges");
             var hookHarmony = game.Import(helper.Methods.First(d => d.Name == "HookHarmony"));
 
-            var pro = awakeMethod.Body.GetILProcessor();
+            var pro = singletonCreated.Body.GetILProcessor();
             var body = pro.Body.Instructions;
             var ins = body.First(d => d.OpCode == OpCodes.Newobj);
 
