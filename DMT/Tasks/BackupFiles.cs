@@ -21,7 +21,7 @@ namespace DMT.Tasks
             var ctor = consts.Methods.Single(d => d.Name == ".cctor");
             var pro = ctor.Body.GetILProcessor();
             var ins = pro.Body.Instructions;
-            var instruction = ins.First(d => d.OpCode == OpCodes.Stsfld && ((FieldDefinition)d.Operand).Name.Contains("cCompatibilityVersion"));
+            var instruction = ins.First(d => d.OpCode == OpCodes.Stsfld && (((FieldDefinition)d.Operand).Name.Contains("cVersionInformation") || ((FieldDefinition)d.Operand).Name.Contains("cCompatibilityVersion")));
 
 
             instruction = instruction.GetNextIntInstruction().GetNextIntInstruction();
