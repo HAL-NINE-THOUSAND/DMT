@@ -12,6 +12,8 @@ using DMT;
 using DMT.Compiler;
 using DMT.Interfaces;
 using DMT.Properties;
+using DMT.Tasks;
+using Mono.Cecil;
 
 namespace DMTViewer
 {
@@ -589,6 +591,55 @@ namespace DMTViewer
         private void BuildFile(string from, string to, string name)
         {
             File.Copy(from + name, to + name, true);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            var folder = BuildSettings.Instance.GameFolders.FirstOrDefault();
+            if (folder == null) return;
+            if (!Directory.Exists(folder))
+            {
+                return;
+            }
+
+            Process.Start("explorer.exe", folder.Replace('/', '\\'));
+        }
+
+        private void revertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var data = PatchData.Create(BuildSettings.Instance);
+            data.GameFolder = BuildSettings.Instance.GameFolders.FirstOrDefault();
+            data.Init();
+
+            if (BuildSettings.Instance.AutoClose)
+            {
+                var isDedicatedServer = data.IsDedicatedServer;
+                var exe = isDedicatedServer ? "7DaysToDieServer" : "7DaysToDie";
+                Helper.KillProcessByName(exe);
+            }
+
+            var p = new ReaderParameters();
+            p.InMemory = true;
+            var ass = AssemblyDefinition.ReadAssembly(data.GameDllLocation, p);
+
+            var module = ass.MainModule;
+            BackupFiles.GetVersionInfo(module);
+            data.BackupFolder = data.BackupFolder + (data.IsDedicatedServer ? "Dedi/" : "SP/") + BuildSettings.MajorVersion + "." + BuildSettings.MinorVersion + "b" + BuildSettings.BuildNumber + "/";
+            data.BackupDllLocataion = data.BackupFolder + PatchData.AssemblyFilename;
+
+            if (File.Exists(data.BackupDllLocataion))
+            {
+                File.Copy(data.BackupDllLocataion, data.GameDllLocation, true);
+                OnLog($"Dll reverted {data.BackupDllLocataion}", LogType.Info);
+            }
+            else
+            {
+                OnLog("Could not revert DLL", LogType.Info);
+            }
+
+
         }
     }
 }

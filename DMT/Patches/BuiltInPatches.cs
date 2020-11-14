@@ -54,9 +54,9 @@ namespace DMT.Patches
 
             var pro = register.Body.GetILProcessor();
             var body = pro.Body.Instructions;
-            var ins = body.First(d => d.OpCode == OpCodes.Newobj);
+            var ins = body.Last(d => d.OpCode == OpCodes.Ret);
 
-            pro.InsertBefore(ins, Instruction.Create(OpCodes.Ldloc_1));
+            //pro.InsertBefore(ins, Instruction.Create(OpCodes.Ldloc_1));
             pro.InsertBefore(ins, Instruction.Create(OpCodes.Callvirt, addRefs));
             pro.InsertBefore(ins, Instruction.Create(OpCodes.Callvirt, initMethods));
 

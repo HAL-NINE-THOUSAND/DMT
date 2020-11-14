@@ -14,22 +14,35 @@ namespace DMT.Tasks
 
         private ModuleDefinition Module { get; set; }
 
-        private void GetVersionInfo()
+        public static void GetVersionInfo(ModuleDefinition module)
         {
 
-            var consts = Module.Types.First(d => d.Name == "Constants");
+            var consts = module.Types.First(d => d.Name == "Constants");
             var ctor = consts.Methods.Single(d => d.Name == ".cctor");
             var pro = ctor.Body.GetILProcessor();
             var ins = pro.Body.Instructions;
-            var instruction = ins.First(d => d.OpCode == OpCodes.Stsfld && (((FieldDefinition)d.Operand).Name.Contains("cVersionInformation") || ((FieldDefinition)d.Operand).Name.Contains("cCompatibilityVersion")));
+            var instruction = ins.FirstOrDefault(d => d.OpCode == OpCodes.Stsfld && (((FieldDefinition)d.Operand).Name.Contains("cCompatibilityVersion")));
 
+            if (instruction != null)
+            {
+                instruction = instruction.GetNextIntInstruction().GetNextIntInstruction();
+                BuildSettings.MajorVersion = instruction.GetValueAsInt();
+                instruction = instruction.GetNextIntInstruction();
+                BuildSettings.MinorVersion = instruction.GetValueAsInt();
+                instruction = instruction.GetNextIntInstruction();
+                BuildSettings.BuildNumber = instruction.GetValueAsInt();
+            }
+            else
+            {
+                //|| ((FieldDefinition)d.Operand).Name.Contains("cVersionInformation")
+                instruction = ins.First().GetNextIntInstruction().GetNextIntInstruction().GetNextIntInstruction();
+                BuildSettings.MajorVersion = instruction.GetValueAsInt();
+                instruction = instruction.GetNextIntInstruction();
+                BuildSettings.MinorVersion = instruction.GetValueAsInt();
+                instruction = instruction.GetNextIntInstruction();
+                BuildSettings.BuildNumber = instruction.GetValueAsInt();
+            }
 
-            instruction = instruction.GetNextIntInstruction().GetNextIntInstruction();
-            BuildSettings.MajorVersion = instruction.GetValueAsInt();
-            instruction = instruction.GetNextIntInstruction();
-            BuildSettings.MinorVersion = instruction.GetValueAsInt();
-            instruction = instruction.GetNextIntInstruction();
-            BuildSettings.BuildNumber = instruction.GetValueAsInt();
 
         }
 
@@ -58,7 +71,7 @@ namespace DMT.Tasks
 
             var ass = AssemblyDefinition.ReadAssembly(data.GameDllLocation);
             Module = ass.MainModule;
-            GetVersionInfo();
+            GetVersionInfo(Module);
 
             data.BackupFolder = data.BackupFolder + (data.IsDedicatedServer ? "Dedi/" : "SP/") + BuildSettings.MajorVersion + "." + BuildSettings.MinorVersion + "b" + BuildSettings.BuildNumber + "/";
             data.BackupFolder.MakeFolder();

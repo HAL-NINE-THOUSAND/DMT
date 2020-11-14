@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class DMTChanges
 {
-    public static void AddReferencedAssemblies(List<Assembly> assemblies)
+    public static void AddReferencedAssemblies()
     {
         var loc = Assembly.GetExecutingAssembly().Location;
         loc = loc.Substring(0, loc.LastIndexOf(Path.DirectorySeparatorChar));
@@ -20,41 +20,42 @@ public class DMTChanges
         {
             Log.Out("Trying to add mods.dll");
             Assembly assembly = Assembly.LoadFrom(dllPath);
-            assemblies.Add(assembly);
+            //assemblies.Add(assembly);
         }
 
-        var asses = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
-        Log.Out("Assemblies: " + asses.Length);
-        foreach (AssemblyName an in asses)
-        {
+        //List<Assembly> assemblies
+        //var asses = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
+        //Log.Out("Assemblies: " + asses.Length);
+        //foreach (AssemblyName an in asses)
+        //{
 
-            var path = loc + "/" + an.Name + ".dll";
-            if (!File.Exists(path))
-            {
-                Log.Out("Skipping missing Assembly: " + an.Name);
-                continue;
-            }
-            Assembly asm = Assembly.Load(an.ToString());
-            if (!assemblies.Contains(asm))
-            {
-                Log.Out("Adding Assembly: " + an.Name);
-                assemblies.Add(asm);
-            }
-            else
-            {
-                Log.Out("Assembly already added: " + an.Name);
-            }
-        }
+        //    var path = loc + "/" + an.Name + ".dll";
+        //    if (!File.Exists(path))
+        //    {
+        //        Log.Out("Skipping missing Assembly: " + an.Name);
+        //        continue;
+        //    }
+        //    Assembly asm = Assembly.Load(an.ToString());
+        //    if (!assemblies.Contains(asm))
+        //    {
+        //        Log.Out("Adding Assembly: " + an.Name);
+        //        assemblies.Add(asm);
+        //    }
+        //    else
+        //    {
+        //        Log.Out("Assembly already added: " + an.Name);
+        //    }
+        //}
 
 
 
-        var dmt = assemblies.FirstOrDefault(d => d.FullName.StartsWith("DMT, Version="));
+        //var dmt = assemblies.FirstOrDefault(d => d.FullName.StartsWith("DMT, Version="));
 
-        if (dmt != null)
-        {
-            Log.Out("Removing DMT assembly");
-            assemblies.Remove(dmt);
-        }
+        //if (dmt != null)
+        //{
+        //    Log.Out("Removing DMT assembly");
+        //    assemblies.Remove(dmt);
+        //}
 
     }
 

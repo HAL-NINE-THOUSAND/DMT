@@ -180,13 +180,17 @@ namespace DMT
             {
                 if (start == null) break;
                 var code = start.OpCode.ToString();
-                
+
                 if (code.Contains(".i4"))
                 {
                     return start;
                 }
+                if (code.Contains(".i4.s"))
+                {
+                    return start;
+                }
 
-                start=start.Next;
+                start =start.Next;
             }
             return null;
         }
