@@ -9,81 +9,11 @@ using UnityEngine;
 
 public class DMTChanges
 {
-    public static void FindTypesImplementingBase(Type _searchType, Action<Type> _typeFoundCallback, bool _allowAbstract = false)
-    {
-        try
-        {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            for (int iAss = 0; iAss < assemblies.Length; iAss++)
-            {
-                Assembly a = assemblies[iAss];
-                try
-                {
-                    foreach (Type t in a.GetTypes())
-                    {
-                        if (!t.IsClass)
-                        {
-                            continue;
-                        }
-
-                        if (!_allowAbstract && t.IsAbstract)
-                        {
-                            continue;
-                        }
-
-                        if (!_searchType.IsAssignableFrom(t))
-                        {
-                            continue;
-                        }
-
-                        try
-                        {
-                            _typeFoundCallback?.Invoke(t);
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Error($"Error invoking found type callback for '{t.FullName}'");
-                            Log.Exception(e);
-                        }
-                    }
-                }
-                catch (ReflectionTypeLoadException e)
-                {
-                    Log.Error($"Error loading types from assembly '{a.FullName}' ({a.Location})");
-                    Log.Exception(e);
-                    Console.WriteLine();
-                    Console.WriteLine("Successfully loaded Types:");
-                    int i = 1;
-                    foreach (Type t in e.Types)
-                    {
-                        Console.WriteLine($"{i++}. {(t != null ? t.FullName : "NULL")}");
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine("Exceptions:");
-                    i = 1;
-                    foreach (Exception e2 in e.LoaderExceptions)
-                    {
-                        Console.WriteLine($"{i++}. {(e2 != null ? e2.Message : "NULL")}");
-                    }
-                    Console.WriteLine();
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"Error loading types from assembly {a.Location}");
-                    Log.Exception(e);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Error("Error loading types");
-            Log.Exception(e);
-        }
-    }
     public static List<Assembly> GetLoadedAssemblies()
     {
         var ret = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
+        ret.RemoveAll(d=> d.FullName.StartsWith("DMT,"));
         return ret;
     }
 
