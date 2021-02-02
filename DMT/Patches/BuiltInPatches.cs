@@ -16,6 +16,7 @@ namespace DMT.Patches
             MarkAsPatched(game);
             HookHarmony(game, dmt);
             HookConsoleCommands(game, dmt);
+            UpdateFindTypeHelper(game, dmt);
         }
 
         private void MarkAsPatched(ModuleDefinition game)
@@ -42,6 +43,31 @@ namespace DMT.Patches
 
 
         }
+        private void UpdateFindTypeHelper(ModuleDefinition game, ModuleDefinition mod)
+        {
+          
+            var console = game.Types.FirstOrDefault(d => d.Name == "ReflectionHelpers");
+            var register = console.Methods.First(d => d.Name == "FindTypesImplementingBase");
+
+            var helper = mod.Types.First(d => d.Name == "DMTChanges");
+            var getAsses = game.ImportReference(helper.Methods.First(d => d.Name == "GetLoadedAssemblies"));
+
+            var pro = register.Body.GetILProcessor();
+            var body = pro.Body.Instructions;
+            var ins = body.First(d=> d.Operand != null && d.Operand.ToString().ContainsIgnoreCase("GetExecutingAssembly"));
+
+            if (ins == null)
+            {
+                Logging.LogWarning("Could not update find type helper");
+                return;
+            }
+            pro.Body.Instructions[0].Operand = getAsses;
+            pro.Remove(ins.Next);
+            pro.Remove(ins.Previous.Previous);
+            pro.Remove(ins.Previous);
+            pro.Remove(ins);
+
+        }
         private void HookConsoleCommands(ModuleDefinition game, ModuleDefinition mod)
         {
             Logging.Log("Hooking console commands");
@@ -54,7 +80,7 @@ namespace DMT.Patches
 
             var pro = register.Body.GetILProcessor();
             var body = pro.Body.Instructions;
-            var ins = body.Last(d => d.OpCode == OpCodes.Ret);
+            var ins = body.First();
 
             //pro.InsertBefore(ins, Instruction.Create(OpCodes.Ldloc_1));
             pro.InsertBefore(ins, Instruction.Create(OpCodes.Callvirt, addRefs));

@@ -42,11 +42,13 @@
             this.manualUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.experimentalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableDebuggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.revertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.makeReleaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.btnModsFolder = new System.Windows.Forms.Button();
             this.panButtons = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.chkAssetCopy = new System.Windows.Forms.CheckBox();
             this.chkHarmonyUpdate = new System.Windows.Forms.CheckBox();
             this.btnDebug = new System.Windows.Forms.Button();
@@ -56,8 +58,6 @@
             this.chkAutoClose = new System.Windows.Forms.CheckBox();
             this.btnBuild = new System.Windows.Forms.Button();
             this.diag = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
-            this.revertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -72,10 +72,10 @@
             this.ColDesc});
             this.lstMods.Dock = System.Windows.Forms.DockStyle.Left;
             this.lstMods.HideSelection = false;
-            this.lstMods.Location = new System.Drawing.Point(0, 126);
-            this.lstMods.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstMods.Location = new System.Drawing.Point(0, 200);
+            this.lstMods.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.lstMods.Name = "lstMods";
-            this.lstMods.Size = new System.Drawing.Size(889, 497);
+            this.lstMods.Size = new System.Drawing.Size(1332, 774);
             this.lstMods.TabIndex = 0;
             this.lstMods.UseCompatibleStateImageBehavior = false;
             this.lstMods.View = System.Windows.Forms.View.Details;
@@ -102,20 +102,22 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1947, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(2920, 48);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(121, 42);
             this.optionsToolStripMenuItem.Text = "Settings";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -128,20 +130,20 @@
             this.experimentalToolStripMenuItem,
             this.makeReleaseToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(100, 42);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // mnuVersion
             // 
             this.mnuVersion.Name = "mnuVersion";
-            this.mnuVersion.Size = new System.Drawing.Size(247, 26);
+            this.mnuVersion.Size = new System.Drawing.Size(402, 44);
             this.mnuVersion.Text = "version";
             this.mnuVersion.Click += new System.EventHandler(this.MnuVersion_Click);
             // 
             // madeByMachineElvesToolStripMenuItem1
             // 
             this.madeByMachineElvesToolStripMenuItem1.Name = "madeByMachineElvesToolStripMenuItem1";
-            this.madeByMachineElvesToolStripMenuItem1.Size = new System.Drawing.Size(247, 26);
+            this.madeByMachineElvesToolStripMenuItem1.Size = new System.Drawing.Size(402, 44);
             this.madeByMachineElvesToolStripMenuItem1.Text = "Made by Machine Elves";
             this.madeByMachineElvesToolStripMenuItem1.Click += new System.EventHandler(this.MadeByMachineElvesToolStripMenuItem1_Click);
             // 
@@ -150,14 +152,14 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manualUpdateToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(247, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(402, 44);
             this.toolStripMenuItem1.Text = "Check for updates";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // manualUpdateToolStripMenuItem
             // 
             this.manualUpdateToolStripMenuItem.Name = "manualUpdateToolStripMenuItem";
-            this.manualUpdateToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.manualUpdateToolStripMenuItem.Size = new System.Drawing.Size(306, 44);
             this.manualUpdateToolStripMenuItem.Text = "ManualUpdate";
             this.manualUpdateToolStripMenuItem.Click += new System.EventHandler(this.manualUpdateToolStripMenuItem_Click);
             // 
@@ -167,40 +169,47 @@
             this.enableDebuggerToolStripMenuItem,
             this.revertToolStripMenuItem});
             this.experimentalToolStripMenuItem.Name = "experimentalToolStripMenuItem";
-            this.experimentalToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.experimentalToolStripMenuItem.Size = new System.Drawing.Size(402, 44);
             this.experimentalToolStripMenuItem.Text = "Experimental";
             // 
             // enableDebuggerToolStripMenuItem
             // 
             this.enableDebuggerToolStripMenuItem.Name = "enableDebuggerToolStripMenuItem";
-            this.enableDebuggerToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
+            this.enableDebuggerToolStripMenuItem.Size = new System.Drawing.Size(334, 44);
             this.enableDebuggerToolStripMenuItem.Text = "Enable Debugger";
             this.enableDebuggerToolStripMenuItem.Click += new System.EventHandler(this.EnableDebuggerToolStripMenuItem_Click);
+            // 
+            // revertToolStripMenuItem
+            // 
+            this.revertToolStripMenuItem.Name = "revertToolStripMenuItem";
+            this.revertToolStripMenuItem.Size = new System.Drawing.Size(334, 44);
+            this.revertToolStripMenuItem.Text = "Revert";
+            this.revertToolStripMenuItem.Click += new System.EventHandler(this.revertToolStripMenuItem_Click);
             // 
             // makeReleaseToolStripMenuItem
             // 
             this.makeReleaseToolStripMenuItem.Name = "makeReleaseToolStripMenuItem";
-            this.makeReleaseToolStripMenuItem.Size = new System.Drawing.Size(247, 26);
+            this.makeReleaseToolStripMenuItem.Size = new System.Drawing.Size(402, 44);
             this.makeReleaseToolStripMenuItem.Text = "MakeRelease";
             this.makeReleaseToolStripMenuItem.Click += new System.EventHandler(this.makeReleaseToolStripMenuItem_Click);
             // 
             // rtbOutput
             // 
             this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rtbOutput.Location = new System.Drawing.Point(1094, 126);
-            this.rtbOutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rtbOutput.Location = new System.Drawing.Point(1642, 200);
+            this.rtbOutput.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(853, 497);
+            this.rtbOutput.Size = new System.Drawing.Size(1278, 774);
             this.rtbOutput.TabIndex = 3;
             this.rtbOutput.Text = "";
             this.rtbOutput.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbOutput_LinkClicked);
             // 
             // btnModsFolder
             // 
-            this.btnModsFolder.Location = new System.Drawing.Point(15, 12);
-            this.btnModsFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnModsFolder.Location = new System.Drawing.Point(22, 19);
+            this.btnModsFolder.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnModsFolder.Name = "btnModsFolder";
-            this.btnModsFolder.Size = new System.Drawing.Size(157, 39);
+            this.btnModsFolder.Size = new System.Drawing.Size(236, 61);
             this.btnModsFolder.TabIndex = 6;
             this.btnModsFolder.Text = "Mods Folder";
             this.btnModsFolder.UseVisualStyleBackColor = true;
@@ -210,10 +219,10 @@
             // 
             this.panButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panButtons.Location = new System.Drawing.Point(0, 623);
-            this.panButtons.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panButtons.Location = new System.Drawing.Point(0, 974);
+            this.panButtons.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panButtons.Name = "panButtons";
-            this.panButtons.Size = new System.Drawing.Size(1947, 76);
+            this.panButtons.Size = new System.Drawing.Size(2920, 118);
             this.panButtons.TabIndex = 7;
             // 
             // panel1
@@ -230,20 +239,31 @@
             this.panel1.Controls.Add(this.btnBuild);
             this.panel1.Controls.Add(this.btnModsFolder);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 28);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Location = new System.Drawing.Point(0, 48);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1947, 98);
+            this.panel1.Size = new System.Drawing.Size(2920, 152);
             this.panel1.TabIndex = 9;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(318, 19);
+            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(236, 61);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Game Folder";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // chkAssetCopy
             // 
             this.chkAssetCopy.AutoSize = true;
-            this.chkAssetCopy.Location = new System.Drawing.Point(605, 65);
-            this.chkAssetCopy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkAssetCopy.Location = new System.Drawing.Point(908, 102);
+            this.chkAssetCopy.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.chkAssetCopy.Name = "chkAssetCopy";
-            this.chkAssetCopy.Size = new System.Drawing.Size(132, 21);
+            this.chkAssetCopy.Size = new System.Drawing.Size(202, 29);
             this.chkAssetCopy.TabIndex = 14;
             this.chkAssetCopy.Text = "Skip Asset Copy";
             this.chkAssetCopy.UseVisualStyleBackColor = true;
@@ -252,10 +272,10 @@
             // chkHarmonyUpdate
             // 
             this.chkHarmonyUpdate.AutoSize = true;
-            this.chkHarmonyUpdate.Location = new System.Drawing.Point(899, 65);
-            this.chkHarmonyUpdate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkHarmonyUpdate.Location = new System.Drawing.Point(1348, 102);
+            this.chkHarmonyUpdate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.chkHarmonyUpdate.Name = "chkHarmonyUpdate";
-            this.chkHarmonyUpdate.Size = new System.Drawing.Size(222, 21);
+            this.chkHarmonyUpdate.Size = new System.Drawing.Size(334, 29);
             this.chkHarmonyUpdate.TabIndex = 13;
             this.chkHarmonyUpdate.Text = "Attempt Harmony Auto Update";
             this.chkHarmonyUpdate.UseVisualStyleBackColor = true;
@@ -263,10 +283,10 @@
             // 
             // btnDebug
             // 
-            this.btnDebug.Location = new System.Drawing.Point(1499, 15);
-            this.btnDebug.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDebug.Location = new System.Drawing.Point(2248, 23);
+            this.btnDebug.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnDebug.Name = "btnDebug";
-            this.btnDebug.Size = new System.Drawing.Size(100, 39);
+            this.btnDebug.Size = new System.Drawing.Size(150, 61);
             this.btnDebug.TabIndex = 12;
             this.btnDebug.Text = "Debug Exe";
             this.btnDebug.UseVisualStyleBackColor = true;
@@ -275,10 +295,10 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(605, 12);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRefresh.Location = new System.Drawing.Point(908, 19);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(157, 39);
+            this.btnRefresh.Size = new System.Drawing.Size(236, 61);
             this.btnRefresh.TabIndex = 11;
             this.btnRefresh.Text = "Refresh Mods";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -286,10 +306,10 @@
             // 
             // Play
             // 
-            this.Play.Location = new System.Drawing.Point(1287, 15);
-            this.Play.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Play.Location = new System.Drawing.Point(1930, 23);
+            this.Play.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Play.Name = "Play";
-            this.Play.Size = new System.Drawing.Size(100, 39);
+            this.Play.Size = new System.Drawing.Size(150, 61);
             this.Play.TabIndex = 10;
             this.Play.Text = "Play";
             this.Play.UseVisualStyleBackColor = true;
@@ -298,10 +318,10 @@
             // chkPlay
             // 
             this.chkPlay.AutoSize = true;
-            this.chkPlay.Location = new System.Drawing.Point(899, 37);
-            this.chkPlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPlay.Location = new System.Drawing.Point(1348, 58);
+            this.chkPlay.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.chkPlay.Name = "chkPlay";
-            this.chkPlay.Size = new System.Drawing.Size(124, 21);
+            this.chkPlay.Size = new System.Drawing.Size(187, 29);
             this.chkPlay.TabIndex = 9;
             this.chkPlay.Text = "Play after build";
             this.chkPlay.UseVisualStyleBackColor = true;
@@ -310,10 +330,10 @@
             // chkAutoClose
             // 
             this.chkAutoClose.AutoSize = true;
-            this.chkAutoClose.Location = new System.Drawing.Point(899, 15);
-            this.chkAutoClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkAutoClose.Location = new System.Drawing.Point(1348, 23);
+            this.chkAutoClose.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.chkAutoClose.Name = "chkAutoClose";
-            this.chkAutoClose.Size = new System.Drawing.Size(98, 21);
+            this.chkAutoClose.Size = new System.Drawing.Size(149, 29);
             this.chkAutoClose.TabIndex = 8;
             this.chkAutoClose.Text = "Auto Close";
             this.chkAutoClose.UseVisualStyleBackColor = true;
@@ -321,10 +341,10 @@
             // 
             // btnBuild
             // 
-            this.btnBuild.Location = new System.Drawing.Point(1075, 14);
-            this.btnBuild.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBuild.Location = new System.Drawing.Point(1612, 22);
+            this.btnBuild.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnBuild.Name = "btnBuild";
-            this.btnBuild.Size = new System.Drawing.Size(100, 39);
+            this.btnBuild.Size = new System.Drawing.Size(150, 61);
             this.btnBuild.TabIndex = 7;
             this.btnBuild.Text = "Build";
             this.btnBuild.UseVisualStyleBackColor = true;
@@ -335,36 +355,18 @@
             this.diag.DefaultExt = "zip";
             this.diag.FileName = "diag";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(212, 12);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(157, 39);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Game Folder";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // revertToolStripMenuItem
-            // 
-            this.revertToolStripMenuItem.Name = "revertToolStripMenuItem";
-            this.revertToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.revertToolStripMenuItem.Text = "Revert";
-            this.revertToolStripMenuItem.Click += new System.EventHandler(this.revertToolStripMenuItem_Click);
-            // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1947, 699);
+            this.ClientSize = new System.Drawing.Size(2920, 1092);
             this.Controls.Add(this.lstMods);
             this.Controls.Add(this.rtbOutput);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panButtons);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "frmMain";
             this.Text = "DMT";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
